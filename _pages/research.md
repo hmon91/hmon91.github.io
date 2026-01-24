@@ -29,7 +29,7 @@ Once the neural network is bounded, I use **Control Theory** to certify that the
 ### Positive Aizerman Framework
 My verification pipeline relies on the **Positive Aizerman Conjecture**. By embedding the bounded neural network into a "Positive Lur'e System" framework, we reduce the complex stability problem to simple linear algebra checks.
 * **Efficiency:** Instead of solving computationally expensive Linear Matrix Inequalities (LMIs), we simply check if the resulting system matrices are **Metzler** and **Hurwitz**.
-* **Scalability:** This approach achieves up to $\approx 10^4\times$ speedup over state-of-the-art methods, enabling verification of larger systems.
+* **Scalability:** This approach achieves up to \\(\approx 10^4\times\\) speedup over state-of-the-art methods, enabling verification of larger systems.
 
 ### Region of Attraction (ROA) Analysis
 For systems that are not globally stable, I use the Local Sector Bounds to estimate the **Region of Attraction** (ROA).
@@ -68,8 +68,8 @@ We introduced the **Predator-Swarm-Guide (PSG)** model, a hybrid framework that 
 3.  **The Guide (Leader):** A trusted agent attempting to steer the swarm to a "Safe Zone".
 
 ### Key Contributions
-* **Dynamic Guidance Strategy:** We modeled a guiding agent whose movement is governed by a weighting parameter ($\lambda$), optimizing the trade-off between "moving toward safety" and "evading the shooter".
-* **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion ($\alpha_1$) and guidance strategy ($\lambda$), demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
+* **Dynamic Guidance Strategy:** We modeled a guiding agent whose movement is governed by a weighting parameter \\( (\lambda) \\), optimizing the trade-off between "moving toward safety" and "evading the shooter".
+* **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion \\( (\alpha_1)\\) and guidance strategy \\( (\lambda)\\), demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
 * **Equilibrium Analysis:** By analyzing the continuum-limit version of the model, we derived theoretical predictions for the crowd's steady-state configuration (e.g., forming annular shapes around the predator).
 
 ---
