@@ -14,7 +14,7 @@ A critical step in verifying neural feedback loops is creating accurate, tractab
 ### Global Sector Bounds
 For global stability analysis, I derived a method to calculate **Global Sector Bounds** for fully connected Feedforward Neural Networks (FFNNs).
 * **Method:** We propagate the sector properties of individual activation functions (like ReLU or Tanh) layer-by-layer through the weight matrices.
-* **Result:** This yields a global linear envelope \\(\Gamma_1 x \leq NN(x) \leq \Gamma_2 x\)) valid for the entire state space.
+* **Result:** This yields a global linear envelope \\(\Gamma_1 x \leq NN(x) \leq \Gamma_2 x\\) valid for the entire state space.
 
 ### Local Sector Bounds
 Global bounds can be conservative. To address this, I developed a novel **Local Sector Bound** formulation.
