@@ -3,7 +3,6 @@ permalink: /
 title: "About Me"
 excerpt: "About me"
 author_profile: true
-mathjax: true
 redirect_from: 
   - /about/
   - /about.html
