@@ -3,11 +3,16 @@ layout: archive
 title: "Research Projects"
 permalink: /research/
 author_profile: true
-mathjax: true
 ---
 
 {% include base_path %}
 
+<center>
+  <img src="/images/research_schematic.png" alt="Research Methodology Schematic" style="width: 100%; max-width: 900px; border: 1px solid #ddd; padding: 5px;">
+  <br>
+  <em><strong>Figure 1:</strong> Overview of my framework for Scalable Stability & Robustness Verification of Neural Feedback Systems.</em>
+</center>
+<br>
 ## 1. Neural Network Bounding
 A critical step in verifying neural feedback loops is creating accurate, tractable mathematical models of the neural network's non-linear behavior. My research focuses on deriving linear "Sector Bounds" that enclose the network's output.
 
@@ -68,8 +73,8 @@ We introduced the **Predator-Swarm-Guide (PSG)** model, a hybrid framework that 
 3.  **The Guide (Leader):** A trusted agent attempting to steer the swarm to a "Safe Zone".
 
 ### Key Contributions
-* **Dynamic Guidance Strategy:** We modeled a guiding agent whose movement is governed by a weighting parameter \\( (\lambda) \\), optimizing the trade-off between "moving toward safety" and "evading the shooter".
-* **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion \\( (\alpha_1)\\) and guidance strategy \\( (\lambda)\\), demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
+* **Dynamic Guidance Strategy:** We modeled a guiding agent whose movement is governed by a weighting parameter \\(\lambda\\), optimizing the trade-off between "moving toward safety" and "evading the shooter".
+* **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion \\(\alpha_1\\) and guidance strategy \\(\lambda\\), demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
 * **Equilibrium Analysis:** By analyzing the continuum-limit version of the model, we derived theoretical predictions for the crowd's steady-state configuration (e.g., forming annular shapes around the predator).
 
 ---
