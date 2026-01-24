@@ -24,9 +24,9 @@ repository               : "academicpages/academicpages.github.io"
 author:
   # Biographic information
   avatar           : "profile.jpg"
-  name             : "Your Sidebar Name"
+  name             : "Hamidreza Montazeri Hedesh"
   pronouns         : # example: "she/her"  
-  bio              : "PhD Researcher in Control Systems at Northeastern University"
+  bio              : "PhD Researcher in Control Systems and autonomy"
   location         : "Boston, MA"
   employer         : "Northeastern University"
   uri              : # URL
