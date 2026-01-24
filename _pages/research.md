@@ -32,4 +32,20 @@ While global bounds are powerful, they can be conservative for large inputs. In 
 ---
 
 ## 2. Crowd Dynamics & Control
-In this track of research, I model how crowds move in emergency scenarios...
+---
+## Crowd Dynamics & Emergency Evacuation
+In addition to neural network verification, I research **multi-agent systems** applied to public safety. Specifically, I develop dynamical models to simulate and optimize crowd behavior during active shooter incidents.
+
+### The Predator-Swarm-Guide (PSG) Model
+We introduced the **Predator-Swarm-Guide (PSG)** model, a hybrid framework that models the complex interactions between three distinct entities:
+1.  **The Predator (Shooter):** An agent tracking and repelling the crowd.
+2.  **The Swarm (Crowd):** Agents exhibiting pairwise repulsive/attractive forces (social friction) and wall interactions.
+3.  **The Guide (Leader):** A trusted agent attempting to steer the swarm to a "Safe Zone".
+
+### Key Contributions
+* **Dynamic Guidance Strategy:** We modeled a guiding agent whose movement is governed by a weighting parameter ($\lambda$), optimizing the trade-off between "moving toward safety" and "evading the shooter".
+* **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion ($\alpha_1$) and guidance strategy ($\lambda$), demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
+* **Equilibrium Analysis:** By analyzing the continuum-limit version of the model, we derived theoretical predictions for the crowd's steady-state configuration (e.g., forming annular shapes around the predator).
+
+**Related Publications:**
+1. **A. Darabi, H. M. Hedesh**, M. Siami, M. Sznaier. "Predator-Swarm-Guide Dynamics: A Hybrid Approach to Crowd Modeling and Guidance in Mass Shooting Scenarios," *American Control Conference (ACC)*, 2024. [[PDF]](/publication/2024-07-01-acc-predator)
