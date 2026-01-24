@@ -1,12 +1,10 @@
 ---
-title: "Ensuring both Positivity and Stability Using Sector-Bounded Nonlinearity"
+title: "Ensuring Both Positivity and Stability Using Sector-Bounded Nonlinearity for Systems With Neural Network Controllers"
 collection: publications
-category: conferences
-permalink: /publication/2025-11-01-cdc-paper
-excerpt: 'This paper explores stability conditions for neural network controllers.'
-date: 2025-11-01
-venue: 'IEEE Conference on Decision and Control (CDC)'
-paperurl: 'http://link-to-pdf-or-arxiv.com'
-citation: 'H. Montazeri Hedesh, M. Siami. (2025). &quot;Ensuring both Positivity and Stability Using Sector-Bounded Nonlinearity.&quot; <i>IEEE CDC</i>.'
+category: journals
+permalink: /publication/2024-01-01-lcss-positivity
+excerpt: 'We propose a method to ensure positivity and stability for systems with NN controllers using sector-bounded nonlinearities.'
+date: 2024-01-01
+venue: 'IEEE Control Systems Letters (L-CSS)'
+citation: 'H. Montazeri Hedesh and M. Siami. (2024). "Ensuring Both Positivity and Stability Using Sector-Bounded Nonlinearity for Systems With Neural Network Controllers," <i>IEEE Control Systems Letters</i>, vol. 8, pp. 1685-1690.'
 ---
-[Download paper here](https://ieeexplore.ieee.org/document/11312171)
