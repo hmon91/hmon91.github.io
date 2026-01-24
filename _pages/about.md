@@ -3,11 +3,22 @@ permalink: /
 title: "About Me"
 excerpt: "About me"
 author_profile: true
+mathjax: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
 I am a **Ph.D. researcher** at Northeastern University developing foundational methods for trustworthy and scalable artificial intelligence in dynamical systems. My work lies at the intersection of **data-driven learning, optimization, and control theory**, with a focus on formal verification, robustness, and safety guarantees for neural-network-based decision-making systems.
 
 I develop theory, algorithms, and software for certifying learning-enabled systems operating in complex, safety-critical environments, with applications spanning autonomous systems and robotics.
