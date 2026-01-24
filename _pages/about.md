@@ -6,6 +6,7 @@ author_profile: true
 redirect_from: 
   - /about/
   - /about.html
+  - mathjax: true
 ---
 
 I am a **Ph.D. researcher** at Northeastern University developing foundational methods for trustworthy and scalable artificial intelligence in dynamical systems. My work lies at the intersection of **data-driven learning, optimization, and control theory**, with a focus on formal verification, robustness, and safety guarantees for neural-network-based decision-making systems.
