@@ -8,7 +8,7 @@ author_profile: true
 {% include base_path %}
 
 <center>
-  <img src="/research_schematic.png" alt="Research Methodology Schematic" style="width: 100%; max-width: 900px; border: 1px solid #ddd; padding: 5px;">
+  <img src="/images/research_schematic.png" alt="Research Methodology Schematic" style="width: 100%; max-width: 900px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 1:</strong> Overview of my framework for Scalable Stability & Robustness Verification of Neural Feedback Systems.</em>
 </center>
