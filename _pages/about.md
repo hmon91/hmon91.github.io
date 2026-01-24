@@ -14,7 +14,7 @@ I am a **Ph.D. researcher** at Northeastern University developing foundational m
 I develop theory, algorithms, and software for certifying learning-enabled systems operating in complex, safety-critical environments, with applications spanning autonomous systems and robotics.
 
 ### Research Highlights
-* **Scalable Verification:** Developed a scalable stability and robustness verification pipeline for learning-enabled autonomous systems, achieving up to ~$10^4 \times$ speedup over state-of-the-art methods.
+* **Scalable Verification:** Developed a scalable stability and robustness verification pipeline for learning-enabled autonomous systems, achieving up to ~\\(10^4 \times\\) speedup over state-of-the-art methods.
 * **Neural Network Bounding:** Introduced novel global and local sector-bounds for Feedforward Neural Networks (FFNNs), enabling depth-agnostic and input-aware bounds with tighter certification than methods like CROWN.
 * **Tool Integration:** Integrated verification tools (AutoLIRPA, JAX-Verify) with classical control analysis (Lyapunov methods, MPC) to build reproducible verification workflows.
 
