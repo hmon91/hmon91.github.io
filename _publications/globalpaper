@@ -1,7 +1,7 @@
 ---
 title: "Ensuring Both Positivity and Stability Using Sector-Bounded Nonlinearity for Systems With Neural Network Controllers"
 collection: publications
-category: journals
+category: manuscripts
 permalink: /publication/2024-01-01-lcss-positivity
 excerpt: 'We propose a method to ensure positivity and stability for systems with NN controllers using sector-bounded nonlinearities.'
 date: 2024-01-01
