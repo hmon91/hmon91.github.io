@@ -9,14 +9,14 @@ author_profile: true
 A critical step in verifying neural feedback loops is creating accurate, tractable mathematical models of the neural network's non-linear behavior. My research focuses on deriving linear "Sector Bounds" that enclose the network's output.
 
 ### Global Sector Bounds
-[cite_start]For global stability analysis, I derived a method to calculate **Global Sector Bounds** for fully connected Feedforward Neural Networks (FFNNs)[cite: 108, 148].
-* [cite_start]**Method:** We propagate the sector properties of individual activation functions (like ReLU or Tanh) layer-by-layer through the weight matrices[cite: 639, 740].
-* [cite_start]**Result:** This yields a global linear envelope $\Gamma_1 x \leq NN(x) \leq \Gamma_2 x$ valid for the entire state space[cite: 305].
+For global stability analysis, I derived a method to calculate **Global Sector Bounds** for fully connected Feedforward Neural Networks (FFNNs).
+* **Method:** We propagate the sector properties of individual activation functions (like ReLU or Tanh) layer-by-layer through the weight matrices.
+* **Result:** This yields a global linear envelope $\Gamma_1 x \leq NN(x) \leq \Gamma_2 x$ valid for the entire state space.
 
 ### Local Sector Bounds
-Global bounds can be conservative. [cite_start]To address this, I developed a novel **Local Sector Bound** formulation[cite: 467].
-* [cite_start]**Innovation:** By restricting the analysis to a specific compact set of inputs, we calculate tighter, input-dependent slope matrices[cite: 494].
-* [cite_start]**Advantage:** These bounds are significantly tighter than norm-based approximations and avoid the affine offsets used in methods like CROWN, making them compatible with robust control frameworks[cite: 629].
+Global bounds can be conservative. To address this, I developed a novel **Local Sector Bound** formulation.
+* **Innovation:** By restricting the analysis to a specific compact set of inputs, we calculate tighter, input-dependent slope matrices.
+* **Advantage:** These bounds are significantly tighter than norm-based approximations and avoid the affine offsets used in methods like CROWN, making them compatible with robust control frameworks.
 
 ---
 
@@ -48,9 +48,31 @@ While global bounds are powerful, they can be conservative for large inputs. In 
 1. **H. Montazeri Hedesh**, M. Siami. "Ensuring Both Positivity and Stability Using Sector-Bounded Nonlinearity for Systems With Neural Network Controllers," *IEEE Control Systems Letters*, 2024.
 2. **H. Montazeri Hedesh**, M. Wafi, M. Siami. "Local Stability and Region of Attraction Analysis for Neural Network Feedback Systems under Positivity Constraints," *IEEE CDC*, 2025.
 
+
+## 3. Risk-Aware Safety Verification (Delays & Uncertainty)
+Autonomous systems in the real world face two critical risks: **Time Delays** (from communication or computation) and **Parametric Uncertainty** (modeling errors). My research addresses the challenge of verifying Neural Network controllers under these conditions using two distinct frameworks.
+
+### Method A: Positivity-Based Certificates (Scalable)
+To address the computational bottlenecks of traditional methods, I developed a delay-independent verification framework based on **Positive Systems Theory**.
+* **Approach:** We model the system with interval matrix uncertainty and time delays. By wrapping the neural network in our **Local Sector Bounds** and enforcing a "Metzler" structure on the system matrices, we can certify stability without solving complex optimizations.
+* **Key Result:** If the lower-bound matrix is Metzler and the upper-bound matrix is Hurwitz, the system is robustly stable for *any* non-negative time delay.
+* **Performance:** This method runs orders of magnitude faster than SDP-based approaches.
+
+### Method B: IQC-Based Framework (High-Fidelity)
+As a rigorous benchmark, I also developed a comprehensive **Integral Quadratic Constraint (IQC)** pipeline tailored for neural networks with delays and uncertainty.
+* **LFT Modeling:** We model the discrete delays and element-wise interval uncertainty as a **Linear Fractional Transformation (LFT)**. This separates the "troublesome" components (uncertainty blocks) from the nominal plant.
+* **Composite IQCs:** We construct a composite IQC filter that combines:
+    1.  **Delay IQCs:** Using a delay-line filter to bound the energy of the delay operator.
+    2.  **Uncertainty IQCs:** Using symmetric box multipliers to bound parametric variations.
+    3.  **Neural Network IQCs:** Using sector constraints to bound the nonlinearity.
+* **Verification:** Stability is certified by solving a large-scale **Semi-Definite Program (SDP)**. While computationally heavier, this framework provides a standard robust control baseline for AI-enabled systems.
+
+**Related Publications:**
+1. **H. Montazeri Hedesh**, M. Siami. "Delay-Independent Safe Control with Neural Networks: Positive Lur'e Certificates for Risk-Aware Autonomy," *arXiv*, 2025. [[PDF]](/publication/2025-10-08-delay-paper)
+
 ---
 
-## 2. Crowd Dynamics & Control
+## 4. Crowd Dynamics & Control
 ---
 ## Crowd Dynamics & Emergency Evacuation
 In addition to neural network verification, I research **multi-agent systems** applied to public safety. Specifically, I develop dynamical models to simulate and optimize crowd behavior during active shooter incidents.
