@@ -3,7 +3,10 @@ layout: archive
 title: "Research Projects"
 permalink: /research/
 author_profile: true
+mathjax: true
 ---
+
+{% include base_path %}
 
 ## 1. Neural Network Bounding
 A critical step in verifying neural feedback loops is creating accurate, tractable mathematical models of the neural network's non-linear behavior. My research focuses on deriving linear "Sector Bounds" that enclose the network's output.
@@ -26,31 +29,17 @@ Once the neural network is bounded, I use **Control Theory** to certify that the
 ### Positive Aizerman Framework
 My verification pipeline relies on the **Positive Aizerman Conjecture**. By embedding the bounded neural network into a "Positive Lur'e System" framework, we reduce the complex stability problem to simple linear algebra checks.
 * **Efficiency:** Instead of solving computationally expensive Linear Matrix Inequalities (LMIs), we simply check if the resulting system matrices are **Metzler** and **Hurwitz**.
-* **Scalability:** This approach achieves up to **~$10^4\times$ speedup** over state-of-the-art methods, enabling verification of larger systems.
+* **Scalability:** This approach achieves up to $\approx 10^4\times$ speedup over state-of-the-art methods, enabling verification of larger systems.
 
 ### Region of Attraction (ROA) Analysis
 For systems that are not globally stable, I use the Local Sector Bounds to estimate the **Region of Attraction** (ROA).
 * **Guarantee:** We identify a safe set of initial conditions from which the system is guaranteed to converge to equilibrium.
 * **Performance:** Our method certifies larger ROAs than standard IQC-based approaches.
 
-**Related Publications:**
-1. **H. Montazeri Hedesh**, M. Siami. "Ensuring Both Positivity and Stability Using Sector-Bounded Nonlinearity for Systems With Neural Network Controllers," *IEEE Control Systems Letters*, 2024. [[PDF]](/publication/2024-01-01-lcss-positivity)
-2. **H. Montazeri Hedesh**, M. Wafi, M. Siami. "Local Stability and Region of Attraction Analysis for Neural Network Feedback Systems under Positivity Constraints," *IEEE CDC*, 2025. [[PDF]](/publication/2025-12-01-cdc-local)
-
-### 2. Local Sector Bounds (Region of Attraction)
-While global bounds are powerful, they can be conservative for large inputs. In my recent work on *Local Stability and Region of Attraction Analysis* [[2]](/publication/2025-12-01-cdc-local), we refined this approach to find tighter, **Local Sector Bounds**.
-
-* **The Innovation:** Instead of finding a bound valid for *all* space, we calculate bounds valid within a specific compact set $\Gamma$. We utilize layer-wise linear relaxations of activation functions to propagate tighter constraints.
-* **Region of Attraction (ROA):** By applying a localized version of the Positive Aizerman Conjecture, we can certify a specific **Region of Attraction**. Any trajectory starting inside this region is guaranteed to converge to the equilibrium.
-* **Performance:** Numerical results show this method yields larger certified ROAs than existing methods like CROWN or IBP while maintaining high computational efficiency.
-
-**Related Publications:**
-1. **H. Montazeri Hedesh**, M. Siami. "Ensuring Both Positivity and Stability Using Sector-Bounded Nonlinearity for Systems With Neural Network Controllers," *IEEE Control Systems Letters*, 2024.
-2. **H. Montazeri Hedesh**, M. Wafi, M. Siami. "Local Stability and Region of Attraction Analysis for Neural Network Feedback Systems under Positivity Constraints," *IEEE CDC*, 2025.
-
+---
 
 ## 3. Risk-Aware Safety Verification (Delays & Uncertainty)
-Autonomous systems in the real world face two critical risks: **Time Delays** (from communication or computation) and **Parametric Uncertainty** (modeling errors). My research addresses the challenge of verifying Neural Network controllers under these conditions using two distinct frameworks.
+Autonomous systems in the real world face two critical risks: **Time Delays** (from communication or computation) and **Parametric Uncertainty** (modeling errors). My research addresses these challenges using two distinct frameworks.
 
 ### Method A: Positivity-Based Certificates (Scalable)
 To address the computational bottlenecks of traditional methods, I developed a delay-independent verification framework based on **Positive Systems Theory**.
@@ -67,14 +56,9 @@ As a rigorous benchmark, I also developed a comprehensive **Integral Quadratic C
     3.  **Neural Network IQCs:** Using sector constraints to bound the nonlinearity.
 * **Verification:** Stability is certified by solving a large-scale **Semi-Definite Program (SDP)**. While computationally heavier, this framework provides a standard robust control baseline for AI-enabled systems.
 
-**Related Publications:**
-1. **H. Montazeri Hedesh**, M. Siami. "Delay-Independent Safe Control with Neural Networks: Positive Lur'e Certificates for Risk-Aware Autonomy," *arXiv*, 2025. [[PDF]](/publication/2025-10-08-delay-paper)
-
 ---
 
-## 4. Crowd Dynamics & Control
----
-## Crowd Dynamics & Emergency Evacuation
+## 4. Crowd Dynamics & Emergency Evacuation
 In addition to neural network verification, I research **multi-agent systems** applied to public safety. Specifically, I develop dynamical models to simulate and optimize crowd behavior during active shooter incidents.
 
 ### The Predator-Swarm-Guide (PSG) Model
@@ -88,5 +72,10 @@ We introduced the **Predator-Swarm-Guide (PSG)** model, a hybrid framework that 
 * **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion ($\alpha_1$) and guidance strategy ($\lambda$), demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
 * **Equilibrium Analysis:** By analyzing the continuum-limit version of the model, we derived theoretical predictions for the crowd's steady-state configuration (e.g., forming annular shapes around the predator).
 
-**Related Publications:**
-1. **A. Darabi, H. M. Hedesh**, M. Siami, M. Sznaier. "Predator-Swarm-Guide Dynamics: A Hybrid Approach to Crowd Modeling and Guidance in Mass Shooting Scenarios," *American Control Conference (ACC)*, 2024. [[PDF]](/publication/2024-07-01-acc-predator)
+---
+
+### Related Publications
+1. **H. Montazeri Hedesh**, M. Siami. "Delay-Independent Safe Control with Neural Networks: Positive Lur'e Certificates for Risk-Aware Autonomy," *arXiv*, 2025. [[PDF]](/publication/2025-10-08-delay-paper)
+2. **H. Montazeri Hedesh**, M. Wafi, M. Siami. "Local Stability and Region of Attraction Analysis for Neural Network Feedback Systems under Positivity Constraints," *IEEE CDC*, 2025. [[PDF]](/publication/2025-12-01-cdc-local)
+3. **A. Darabi, H. M. Hedesh**, M. Siami, M. Sznaier. "Predator-Swarm-Guide Dynamics: A Hybrid Approach to Crowd Modeling and Guidance in Mass Shooting Scenarios," *American Control Conference (ACC)*, 2024. [[PDF]](/publication/2024-07-01-acc-predator)
+4. **H. Montazeri Hedesh**, M. Siami. "Ensuring Both Positivity and Stability Using Sector-Bounded Nonlinearity for Systems With Neural Network Controllers," *IEEE Control Systems Letters*, 2024. [[PDF]](/publication/2024-01-01-lcss-positivity)
