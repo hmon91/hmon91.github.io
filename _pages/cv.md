@@ -33,7 +33,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 * **Graduate Research & Teaching Assistant**, Northeastern University (Sep 2021 – Present)
     * Supported autonomous experimentation environments (Quanser, Franka Emika) and reproducible computational pipelines.
     * Research in control, estimation, and learning-enabled autonomy.
-* **Control Systems Engineer**, Safatco (Gas Turbine Industry) (Dec 2019 – Oct 2020)
+* **Control Systems Engineer**, Safatco (Dec 2019 – Oct 2020)
     * Reverse engineered and developed electromagnetic servo valves for fuel control systems.
     * performed SolidWorks modeling, precision measurement, and tolerance validation.
 * **R&D Engineer**, Sharif Technology Services (Satellite-building Project) (Apr 2018 – Oct 2019)
