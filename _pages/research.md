@@ -106,11 +106,11 @@ Iterating **S1–S2** from the input to the output yields constant matrices $\ga
   <div style="flex: 1; min-width: 300px; max-width: 500px; text-align: center;">
     <img src="{{ base_path }}/images/difbounds.png" alt="Comparison with CROWN" style="width: 100%; border: 1px solid #ddd; padding: 5px;">
     <br>
-    <em style="font-size: 0.9em;"><strong>Figure 4a:</strong> Comparison of bound tightness. Our "Local Sector Bound" (yellow) is significantly tighter than the standard interval-based bounds used in CROWN/IBP (light blue), reducing conservatism in stability verification.</em>
+    <em style="font-size: 0.9em;"><strong>Figure 4a:</strong> Comparison of bound structure. Our "Local Sector Bound" (yellow) is structurally different from the standard interval-based bounds used in CROWN/IBP, making it suitable for integrating with positive Aizerman conjecture.</em>
   </div>
 
   <div style="flex: 1; min-width: 300px; max-width: 500px; text-align: center;">
-    <img src="{{ base_path }}/images/local_plots.jpg" alt="Local Stability Plots" style="width: 100%; border: 1px solid #ddd; padding: 5px;">
+    <img src="{{ base_path }}/images/local_plots.png" alt="Local Stability Plots" style="width: 100%; border: 1px solid #ddd; padding: 5px;">
     <br>
     <em style="font-size: 0.9em;"><strong>Figure 4b:</strong> Visualization of Local Sector Bounds for different input intervals. The yellow region indicates the computed sector, which tightly encloses the neural network's nonlinearity (black line).</em>
   </div>
