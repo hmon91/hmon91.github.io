@@ -17,12 +17,10 @@ author_profile: true
 A critical step in verifying neural feedback loops is creating accurate, tractable mathematical models of the neural network's non-linear behavior. My research focuses on deriving linear "Sector Bounds" that enclose the network's output.
 
 ### Global Sector Bounds
+For global stability analysis, I derived a method to calculate **Global Sector Bounds** for fully connected Feedforward Neural Networks (FFNNs). This method assumes the network has **no bias terms** (or biases are handled separately), ensuring the origin is an equilibrium point.
 
 <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px;">
   <div style="flex: 1; min-width: 300px;">
-    <p>
-      For global stability analysis, I derived a method to calculate <strong>Global Sector Bounds</strong> for fully connected Feedforward Neural Networks (FFNNs). This method assumes the network has <strong>no bias terms</strong> (or biases are handled separately), ensuring the origin is an equilibrium point.
-    </p>
     <ul>
       <li><strong>Method:</strong> We propagate the sector properties of individual activation functions (like ReLU or Tanh) layer-by-layer through the weight matrices.</li>
       <li><strong>Result:</strong> This yields a global linear envelope valid for the entire state space:
