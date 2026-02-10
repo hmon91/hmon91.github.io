@@ -28,15 +28,42 @@ For global stability analysis, I derived a method to calculate **Global Sector B
 
 * **Method:** We propagate the sector properties of individual activation functions (like ReLU or Tanh) layer-by-layer through the weight matrices.
 * **Result:** This yields a global linear envelope valid for the entire state space:
-  \\[ \Gamma_1 x \le NN(x) \le \Gamma_2 x \\]
-  where \\(\Gamma_1\\) and \\(\Gamma_2\\) are constant matrices derived from the network weights and activation sectors.
-* **Result:** This yields a global linear envelope \\(\Gamma_1 x \leq NN(x) \leq \Gamma_2 x\\) valid for the entire state space.
+  $$\Gamma_1 x \le NN(x) \le \Gamma_2 x$$
+  where the bounding matrices are defined as:
+  $$\Gamma_1 = -c^q \left( \prod_{i=1}^{q+1} |W^i| \right), \quad \Gamma_2 = c^q \left( \prod_{i=1}^{q+1} |W^i| \right)$$
+
+#### Performance Comparison
+As shown in **Table 1**, our method computes bounds orders of magnitude faster than IQC-based methods while providing tighter envelopes than standard norm-based approximations.
+
+| Method | Network Architecture | Computation Time (s) | Bounds |
+| :--- | :---: | :---: | :---: |
+| **Our Method** | $10/10/1$ | $2.5 \times 10^{-5}$ | $\pm[2.65, 1.61]$ |
+| **Our Method** | $10/15/15/1$ | $2.6 \times 10^{-5}$ | $\pm[2.75, 1.47]$ |
+| **IQC Method** | $10/10/1$ | $0.68$ | — |
+| **Product of Norms** | $10/10/1$ | — | $5.83$ |
+| **Product of Norms** | $10/15/15/1$ | — | $6.45$ |
+<br>
+<em><strong>Table 1:</strong> Comparison of computation time and bound tightness. (10/10/1 denotes a 3-layer NN with 10, 10, and 1 neurons). Note that IQC does not explicitly provide bounds for the entire NN, and Product of Norms is used only for bound comparison, not stability verification.</em>
 
 ### Local Sector Bounds
 Global bounds can be conservative. To address this, I developed a novel **Local Sector Bound** formulation.
+
+<center>
+  <img src="{{ base_path }}/images/local_schematic.png" alt="Local Bound Schematic" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <br>
+  <em><strong>Figure 3:</strong> Schematic illustration of the recursive procedure for computing local sector bounds. We propagate interval bounds layer-by-layer to determine the precise slope matrices $\gamma_1$ and $\gamma_2$.</em>
+</center>
+<br>
+
 * **Innovation:** By restricting the analysis to a specific compact set of inputs, we calculate tighter, input-dependent slope matrices.
 * **Advantage:** These bounds are significantly tighter than norm-based approximations and avoid the affine offsets used in methods like CROWN, making them compatible with robust control frameworks.
 
+<center>
+  <img src="{{ base_path }}/images/local_plots.jpg" alt="Local Stability Plots" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <br>
+  <em><strong>Figure 4:</strong> Visualization of Local Sector Bounds for different input intervals. The yellow region indicates the computed sector, which tightly encloses the neural network's nonlinearity (black line), ensuring valid stability certificates for the specific operating region.</em>
+</center>
+<br>
 ---
 
 ## 2. Stability Verification & Safety
