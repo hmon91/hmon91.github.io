@@ -153,7 +153,7 @@ My verification pipeline relies on the **Positive Aizerman Conjecture**. By embe
 For systems that are not globally stable, I use the Local Sector Bounds to estimate the **Region of Attraction** (ROA).
 
 <center>
-  <img src="{{ base_path }}/images/roa_plots.png" alt="ROA Analysis Plots" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <img src="{{ base_path }}/images/roa_plots.png" alt="ROA Analysis Plots" style="width: 30%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 7:</strong> Estimation of the Region of Attraction (ROA). The yellow areas represent the certified safe sets of initial conditions from which the system is guaranteed to converge to the origin, calculated using our local sector bounds.</em>
 </center>
