@@ -17,8 +17,19 @@ author_profile: true
 A critical step in verifying neural feedback loops is creating accurate, tractable mathematical models of the neural network's non-linear behavior. My research focuses on deriving linear "Sector Bounds" that enclose the network's output.
 
 ### Global Sector Bounds
-For global stability analysis, I derived a method to calculate **Global Sector Bounds** for fully connected Feedforward Neural Networks (FFNNs).
+For global stability analysis, I derived a method to calculate **Global Sector Bounds** for fully connected Feedforward Neural Networks (FFNNs). This method assumes the network has **no bias terms** (or biases are handled separately), ensuring the origin is an equilibrium point.
+
+<center>
+  <img src="{{ base_path }}/images/NN_sector_bounds.png" alt="Global Sector Bounds" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <br>
+  <em><strong>Figure 2:</strong> Validation of Global Sector Bounds. The black line represents the neural network output $NN(z)$, which is strictly contained within the linear envelope formed by the lower bound $\Gamma_1 z$ (blue) and upper bound $\Gamma_2 z$ (red) for all 100 random samples.</em>
+</center>
+<br>
+
 * **Method:** We propagate the sector properties of individual activation functions (like ReLU or Tanh) layer-by-layer through the weight matrices.
+* **Result:** This yields a global linear envelope valid for the entire state space:
+  \\[ \Gamma_1 x \le NN(x) \le \Gamma_2 x \\]
+  where \\(\Gamma_1\\) and \\(\Gamma_2\\) are constant matrices derived from the network weights and activation sectors.
 * **Result:** This yields a global linear envelope \\(\Gamma_1 x \leq NN(x) \leq \Gamma_2 x\\) valid for the entire state space.
 
 ### Local Sector Bounds
