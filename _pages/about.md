@@ -19,9 +19,19 @@ redirect_from:
     }
   };
 </script>
+
 I am a **Ph.D. researcher** at Northeastern University developing foundational methods for trustworthy and scalable artificial intelligence in dynamical systems. My work lies at the intersection of **data-driven learning, optimization, and control theory**, with a focus on formal verification, robustness, and safety guarantees for neural-network-based decision-making systems.
 
 I develop theory, algorithms, and software for certifying learning-enabled systems operating in complex, safety-critical environments, with applications spanning autonomous systems and robotics.
+
+<center>
+  <img src="/images/franka_siami.gif" alt="Franka Emika Robot Demo" style="width: 100%; max-width: 500px; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+  <br>
+  <div style="text-align: center; font-size: 0.9em; padding: 5px;">
+    <em><strong>Experimental Setup:</strong> Real-time manipulation and control demonstration using the Franka Emika Panda robot in the Siami Lab.</em>
+  </div>
+</center>
+<br>
 
 ### Research Highlights
 * **Scalable Verification:** Developed a scalable stability and robustness verification pipeline for learning-enabled autonomous systems, achieving up to ~\\(10^4 \times\\) speedup over state-of-the-art methods.
