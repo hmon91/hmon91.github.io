@@ -17,20 +17,28 @@ author_profile: true
 A critical step in verifying neural feedback loops is creating accurate, tractable mathematical models of the neural network's non-linear behavior. My research focuses on deriving linear "Sector Bounds" that enclose the network's output.
 
 ### Global Sector Bounds
-For global stability analysis, I derived a method to calculate **Global Sector Bounds** for fully connected Feedforward Neural Networks (FFNNs). This method assumes the network has **no bias terms** (or biases are handled separately), ensuring the origin is an equilibrium point.
 
-<center>
-  <img src="{{ base_path }}/images/NN_sector_bounds.png" alt="Global Sector Bounds" style="width: 50%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
-  <br>
-  <em><strong>Figure 2:</strong> Validation of Global Sector Bounds. The black line represents the neural network output $NN(z)$, which is strictly contained within the linear envelope formed by the lower bound $\Gamma_1 z$ (blue) and upper bound $\Gamma_2 z$ (red) for all 100 random samples.</em>
-</center>
-<br>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px;">
+  <div style="flex: 1; min-width: 300px;">
+    <p>
+      For global stability analysis, I derived a method to calculate <strong>Global Sector Bounds</strong> for fully connected Feedforward Neural Networks (FFNNs). This method assumes the network has <strong>no bias terms</strong> (or biases are handled separately), ensuring the origin is an equilibrium point.
+    </p>
+    <ul>
+      <li><strong>Method:</strong> We propagate the sector properties of individual activation functions (like ReLU or Tanh) layer-by-layer through the weight matrices.</li>
+      <li><strong>Result:</strong> This yields a global linear envelope valid for the entire state space:
+      $$\Gamma_1 x \le NN(x) \le \Gamma_2 x$$
+      where the bounding matrices are defined as:
+      $$\Gamma_1 = -c^q \left( \prod_{i=1}^{q+1} |W^i| \right), \quad \Gamma_2 = c^q \left( \prod_{i=1}^{q+1} |W^i| \right)$$
+      </li>
+    </ul>
+  </div>
 
-* **Method:** We propagate the sector properties of individual activation functions (like ReLU or Tanh) layer-by-layer through the weight matrices.
-* **Result:** This yields a global linear envelope valid for the entire state space:
-  $$\Gamma_1 x \le NN(x) \le \Gamma_2 x$$
-  where the bounding matrices are defined as:
-  $$\Gamma_1 = -c^q \left( \prod_{i=1}^{q+1} |W^i| \right), \quad \Gamma_2 = c^q \left( \prod_{i=1}^{q+1} |W^i| \right)$$
+  <div style="flex: 0 0 45%; min-width: 250px;">
+    <img src="{{ base_path }}/images/NN_sector_bounds.png" alt="Global Sector Bounds" style="width: 100%; border: 1px solid #ddd; padding: 5px;">
+    <br>
+    <em style="font-size: 0.9em;"><strong>Figure 2:</strong> Validation of Global Sector Bounds. The black line represents the neural network output $NN(z)$, which is strictly contained within the linear envelope formed by the lower bound $\Gamma_1 z$ (blue) and upper bound $\Gamma_2 z$ (red) for all 100 random samples.</em>
+  </div>
+</div>
 
 #### Performance Comparison
 As shown in **Table 1**, our method computes bounds orders of magnitude faster than IQC-based methods while providing tighter envelopes than standard norm-based approximations.
@@ -225,13 +233,22 @@ $$\dot{x}(t)=\left[\underline{A}_0, \bar{A}_0\right] x(t)+\sum_{i=1}^l\left(\lef
 * **Performance:** Unlike SDP-based methods that scale cubically with the number of neurons, this algebraic approach maintains efficiency even as the system dimension increases.
 
 ### Method B: IQC-Based Framework (High-Fidelity)
-As a rigorous benchmark, I also developed a comprehensive **Integral Quadratic Constraint (IQC)** pipeline tailored for neural networks with delays and uncertainty.
-* **LFT Modeling:** We model the discrete delays and element-wise interval uncertainty as a **Linear Fractional Transformation (LFT)**. This separates the "troublesome" components (uncertainty blocks) from the nominal plant.
+As a rigorous benchmark, I developed a comprehensive **Integral Quadratic Constraint (IQC)** pipeline tailored for neural networks with delays and uncertainty.
+
+<div style="float: right; margin: 0 0 20px 20px; max-width: 450px; text-align: center;">
+  <img src="{{ base_path }}/images/lft_model.png" alt="LFT Model of NN Feedback" style="width: 100%; border: 1px solid #ddd; padding: 5px;">
+  <br>
+  <em style="font-size: 0.85em;"><strong>Figure 9:</strong> Linear fractional transformation (LFT) model of the NN-feedback-loop with delay and interval uncertainty.</em>
+</div>
+
+* **LFT Modeling:** We model the discrete delays and element-wise interval uncertainty as a **Linear Fractional Transformation (LFT)**. This separates the "troublesome" components (uncertainty blocks $\Delta$) from the nominal plant $G$, as shown in the schematic.
 * **Composite IQCs:** We construct a composite IQC filter that combines:
-    1.  **Delay IQCs:** Using a delay-line filter to bound the energy of the delay operator.
+    1.  **Delay IQCs:** Using delay-line filters to bound the energy of the delay operator.
     2.  **Uncertainty IQCs:** Using symmetric box multipliers to bound parametric variations.
     3.  **Neural Network IQCs:** Using sector constraints to bound the nonlinearity.
-* **Verification:** Stability is certified by solving a large-scale **Semi-Definite Program (SDP)**. While computationally heavier, this framework provides a standard robust control baseline for AI-enabled systems.
+* **Verification:** Stability is certified by solving a large-scale **Semi-Definite Program (SDP)**. While computationally heavier than Method A, this framework provides a high-fidelity robust control baseline for AI-enabled systems, ensuring they can handle worst-case scenarios.
+
+<div style="clear: both;"></div>
 
 ---
 
