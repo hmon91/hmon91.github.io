@@ -35,13 +35,49 @@ For global stability analysis, I derived a method to calculate **Global Sector B
 #### Performance Comparison
 As shown in **Table 1**, our method computes bounds orders of magnitude faster than IQC-based methods while providing tighter envelopes than standard norm-based approximations.
 
-| Method | Network Architecture | Computation Time (s) | Bounds |
-| :--- | :---: | :---: | :---: |
-| **Our Method** | $10/10/1$ | $2.5 \times 10^{-5}$ | $\pm[2.65, 1.61]$ |
-| **Our Method** | $10/15/15/1$ | $2.6 \times 10^{-5}$ | $\pm[2.75, 1.47]$ |
-| **IQC Method** | $10/10/1$ | $0.68$ | — |
-| **Product of Norms** | $10/10/1$ | — | $5.83$ |
-| **Product of Norms** | $10/15/15/1$ | — | $6.45$ |
+<table style="width:100%; border-collapse: collapse; text-align: center;">
+  <thead>
+    <tr style="border-bottom: 2px solid #333; background-color: #f9f9f9;">
+      <th style="padding: 10px; border: 1px solid #ddd;">Method</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Network Architecture</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Computation Time (s)</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Bounds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>Our Method</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10 / 10 / 1</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">$2.5 \times 10^{-5}$</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">$\pm[2.65, 1.61]$</td>
+    </tr>
+    <tr style="background-color: #f9f9f9;">
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>Our Method</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10 / 15 / 15 / 1</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">$2.6 \times 10^{-5}$</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">$\pm[2.75, 1.47]$</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>IQC Method</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10 / 10 / 1</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">$0.68$</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">—</td>
+    </tr>
+    <tr style="background-color: #f9f9f9;">
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>Product of Norms</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10 / 10 / 1</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">—</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">$5.83$</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>Product of Norms</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10 / 15 / 15 / 1</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">—</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">$6.45$</td>
+    </tr>
+  </tbody>
+</table>
+
 <br>
 <em><strong>Table 1:</strong> Comparison of computation time and bound tightness. (10/10/1 denotes a 3-layer NN with 10, 10, and 1 neurons). Note that IQC does not explicitly provide bounds for the entire NN, and Product of Norms is used only for bound comparison, not stability verification.</em>
 
