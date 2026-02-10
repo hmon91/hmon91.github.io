@@ -6,5 +6,8 @@ permalink: /publication/2024-07-01-acc-predator
 excerpt: 'A hybrid approach to crowd modeling and guidance using predator-swarm dynamics.'
 date: 2024-07-01
 venue: 'American Control Conference (ACC)'
+paperurl: 'INSERT_LINK_HERE'
 citation: 'A. Darabi, H. M. Hedesh, M. Siami and M. Sznaier. (2024). "Predator-Swarm-Guide Dynamics: A Hybrid Approach to Crowd Modeling and Guidance in Mass Shooting Scenarios," <i>2024 American Control Conference</i>, pp. 4402-4408.'
 ---
+
+<a href="INSERT_LINK_HERE" target="_blank">Download paper here</a>
