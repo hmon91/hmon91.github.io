@@ -226,6 +226,28 @@ As a rigorous benchmark, I also developed a comprehensive **Integral Quadratic C
 ## 4. Crowd Dynamics & Emergency Evacuation
 In addition to neural network verification, I research **multi-agent systems** applied to public safety. Specifically, I develop dynamical models to simulate and optimize crowd behavior during active shooter incidents.
 
+<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 20px;">
+  
+  <div style="flex: 1; min-width: 300px; max-width: 450px; text-align: center;">
+    <video width="100%" controls autoplay loop muted playsinline style="border: 1px solid #ddd;">
+      <source src="{{ base_path }}/images/evacuation_baseline.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <br>
+    <em style="font-size: 0.9em;"><strong>Simulation A: Baseline Crowd.</strong><br>Without optimized guidance, the crowd (blue) is vulnerable to the predator (red cross), resulting in higher casualties ($K$).</em>
+  </div>
+
+  <div style="flex: 1; min-width: 300px; max-width: 450px; text-align: center;">
+    <video width="100%" controls autoplay loop muted playsinline style="border: 1px solid #ddd;">
+      <source src="{{ base_path }}/images/evacuation_optimized.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <br>
+    <em style="font-size: 0.9em;"><strong>Simulation B: Optimized Guidance.</strong><br>Using our tuned parameters ($\alpha=1.625, \lambda=0.71$), the guide (green cross) effectively steers the swarm to the safe zone (green area), significantly minimizing casualties.</em>
+  </div>
+
+</div>
+
 ### The Predator-Swarm-Guide (PSG) Model
 We introduced the **Predator-Swarm-Guide (PSG)** model, a hybrid framework that models the complex interactions between three distinct entities:
 1.  **The Predator (Shooter):** An agent tracking and repelling the crowd.
@@ -233,10 +255,9 @@ We introduced the **Predator-Swarm-Guide (PSG)** model, a hybrid framework that 
 3.  **The Guide (Leader):** A trusted agent attempting to steer the swarm to a "Safe Zone".
 
 ### Key Contributions
-* **Dynamic Guidance Strategy:** We modeled a guiding agent whose movement is governed by a weighting parameter \\(\lambda\\), optimizing the trade-off between "moving toward safety" and "evading the shooter".
-* **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion \\(\alpha_1\\) and guidance strategy \\(\lambda\\), demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
+* **Dynamic Guidance Strategy:** We modeled a guiding agent whose movement is governed by a weighting parameter $\lambda$, optimizing the trade-off between "moving toward safety" and "evading the shooter".
+* **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion $\alpha_1$ and guidance strategy $\lambda$, demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
 * **Equilibrium Analysis:** By analyzing the continuum-limit version of the model, we derived theoretical predictions for the crowd's steady-state configuration (e.g., forming annular shapes around the predator).
-
 ---
 
 ### Related Publications
