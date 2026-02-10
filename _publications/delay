@@ -3,8 +3,11 @@ title: "Delay Independent Safe Control with Neural Networks: Positive Lur'e Cert
 collection: publications
 category: conferences
 permalink: /publication/2026-05-01-acc-delay
-excerpt: 'Accepted at ACC 2026. Delay independent safe control using Positive Lure Certificates.'
+excerpt: 'Accepted at ACC 2026. Delay independent safe control using Positive Lur&apos;e Certificates.'
 date: 2026-05-01
 venue: 'American Control Conference (ACC)'
+paperurl: 'https://arxiv.org/abs/2510.06661'
 citation: 'H. Montazeri Hedesh, and M. Siami. (2026). "Delay Independent Safe Control with Neural Networks: Positive Lur&#39;e Certificates for Risk Aware Autonomy," <i>Accepted at 2026 American Control Conference</i>.'
 ---
+
+<a href="https://arxiv.org/abs/2510.06661" target="_blank">Download paper here</a>
