@@ -127,7 +127,7 @@ Once the neural network is bounded, I use **Control Theory** to certify that the
 My verification pipeline relies on the **Positive Aizerman Conjecture**. By embedding the bounded neural network into a "Positive Lur'e System" framework, we reduce the complex stability problem to simple linear algebra checks.
 
 <center>
-  <img src="{{ base_path }}/images/aizerman_concept.png" alt="Positive Aizerman Concept" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <img src="{{ base_path }}/images/aizerman_concept.jpg" alt="Positive Aizerman Concept" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 5:</strong> Conceptual overview of the Aizerman Framework. We replace the nonlinear feedback $\Phi$ with linear surrogates $k x$ bounded within the sector $[k_1, k_2]$. If the system is stable for these linear bounds, it guarantees stability for the nonlinear system.</em>
 </center>
@@ -137,7 +137,7 @@ My verification pipeline relies on the **Positive Aizerman Conjecture**. By embe
 * **Scalability:** This approach achieves up to $\approx 10^4\times$ speedup over state-of-the-art methods, enabling verification of larger systems.
 
 <center>
-  <img src="{{ base_path }}/images/stability_check.png" alt="Stability Check Diagram" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <img src="{{ base_path }}/images/stability_check.jpg" alt="Stability Check Diagram" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 6:</strong> The simplified verification condition. By constructing lower and upper linear bounds using our novel sector method, stability is certified by checking if the lower bound is Metzler and the upper bound is Hurwitz.</em>
 </center>
@@ -147,7 +147,7 @@ My verification pipeline relies on the **Positive Aizerman Conjecture**. By embe
 For systems that are not globally stable, I use the Local Sector Bounds to estimate the **Region of Attraction** (ROA).
 
 <center>
-  <img src="{{ base_path }}/images/roa_plots.png" alt="ROA Analysis Plots" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <img src="{{ base_path }}/images/roa_plots.jpg" alt="ROA Analysis Plots" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 7:</strong> Estimation of the Region of Attraction (ROA). The yellow areas represent the certified safe sets of initial conditions from which the system is guaranteed to converge to the origin, calculated using our local sector bounds.</em>
 </center>
@@ -155,6 +155,51 @@ For systems that are not globally stable, I use the Local Sector Bounds to estim
 
 * **Guarantee:** We identify a safe set of initial conditions from which the system is guaranteed to converge to equilibrium.
 * **Performance:** Our method certifies larger ROAs than standard IQC-based approaches.
+
+<br>
+<h4>Computational Complexity Comparison</h4>
+<table style="width:100%; border-collapse: collapse; font-size: 0.9em;">
+  <thead>
+    <tr style="border-bottom: 2px solid #333; background-color: #f9f9f9; text-align: left;">
+      <th style="padding: 10px; border: 1px solid #ddd; width: 20%;">Operation</th>
+      <th style="padding: 10px; border: 1px solid #ddd; width: 40%;">Proposed Method (Positive Aizerman)</th>
+      <th style="padding: 10px; border: 1px solid #ddd; width: 40%;">IQC-based Method (Yin et al., 2021)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>NN bound computation</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">$O(l_0 q N^2)$ (Matrix Multiplication)</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">Interval-bound propagation $O(\sum n_i n_{i-1})$ + local slope search $O(n_\phi)$</td>
+    </tr>
+    <tr style="background-color: #f9f9f9;">
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>Stability check</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">Metzler/Hurwitz tests, $O(n_x^2)$<br>(One matrix–vector pass)</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">SDP feasibility with var $P \in \mathbb{S}^{n_x+n_\phi}$<br>Complexity $O((n_x+n_\phi)^6)$</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>ROA</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">Closed-form inequality<br>$Cx_0 \le \frac{\nu_m}{\nu_M} y_{\max}$</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">Ellipsoidal ROA via same SDP as stability<br>$O((n_x+n_\phi)^6)$</td>
+    </tr>
+    <tr style="background-color: #f9f9f9;">
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>Scalability (NN params)</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">Quadratic in NN size ($\sim O(N^2)$)</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">Cubic in NN size ($\sim O(n_\phi^3)$) via hidden neurons</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>Problem class</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;">LP-like (no SDP), closed-form</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">Full SDP with IQCs; requires solver</td>
+    </tr>
+    <tr style="border-top: 2px solid #333; background-color: #eef;">
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>Overall Dominant Cost</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>$O(n_x^3 + N^2)$</strong></td>
+      <td style="padding: 8px; border: 1px solid #ddd;"><strong>$O((n_x+n_\phi)^6)$</strong></td>
+    </tr>
+  </tbody>
+</table>
+<br>
 
 ---
 
