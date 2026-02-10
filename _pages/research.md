@@ -207,10 +207,22 @@ For systems that are not globally stable, I use the Local Sector Bounds to estim
 Autonomous systems in the real world face two critical risks: **Time Delays** (from communication or computation) and **Parametric Uncertainty** (modeling errors). My research addresses these challenges using two distinct frameworks.
 
 ### Method A: Positivity-Based Certificates (Scalable)
-To address the computational bottlenecks of traditional methods, I developed a delay-independent verification framework based on **Positive Systems Theory**.
-* **Approach:** We model the system with interval matrix uncertainty and time delays. By wrapping the neural network in our **Local Sector Bounds** and enforcing a "Metzler" structure on the system matrices, we can certify stability without solving complex optimizations.
-* **Key Result:** If the lower-bound matrix is Metzler and the upper-bound matrix is Hurwitz, the system is robustly stable for *any* non-negative time delay.
-* **Performance:** This method runs orders of magnitude faster than SDP-based approaches.
+To address the computational bottlenecks of traditional methods, I developed a delay-independent verification framework based on **Positive Systems Theory**. 
+
+We characterize the uncertain neural feedback system using the following delayed differential inclusion:
+
+$$\dot{x}(t)=\left[\underline{A}_0, \bar{A}_0\right] x(t)+\sum_{i=1}^l\left(\left[\underline{A}_i, \bar{A}_i\right] x\left(t-\tau_i\right)+B_i \,\Phi\!\big(Cx(t-\tau_i)\big)\right)$$
+
+* **Approach:** This model accounts for both parametric uncertainty in the state matrices and the non-linear activation $\Phi$ of the neural network under time-delays $\tau_i$. By enforcing a "Metzler" structure on the interval bounds, we certify stability for all possible delay values.
+* **Key Result:** Robust stability is guaranteed if the lower-bound matrix $\underline{A}$ is Metzler and the resulting interval system is Hurwitz.
+
+<center>
+  <img src="{{ base_path }}/images/risk_mitigation_results.png" alt="Delay and Uncertainty Robustness" style="width: 100%; max-width: 700px; border: 1px solid #ddd; padding: 5px;">
+  <br>
+  <em><strong>Figure 8:</strong> Robustness against structured perturbations and delays. The plot shows sampled trajectories $y(t)$ for systems with varying delays (up to 9.18s), all converging to equilibrium as predicted by the positivity-based certificate.</em>
+</center>
+
+* **Performance:** Unlike SDP-based methods that scale cubically with the number of neurons, this algebraic approach maintains efficiency even as the system dimension increases.
 
 ### Method B: IQC-Based Framework (High-Fidelity)
 As a rigorous benchmark, I also developed a comprehensive **Integral Quadratic Constraint (IQC)** pipeline tailored for neural networks with delays and uncertainty.
