@@ -8,7 +8,7 @@ author_profile: true
 {% include base_path %}
 
 <center>
-  <img src="/images/researchschematic.jpg" alt="Research Methodology Schematic" style="width: 50%; max-width: 900px; border: 1px solid #ddd; padding: 5px;">
+  <img src="/images/researchschematic.jpg" alt="Research Methodology Schematic" style="width: 100%; max-width: 900px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 1:</strong> Overview of my framework for Scalable Stability & Robustness Verification of Neural Feedback Systems.</em>
 </center>
@@ -20,7 +20,7 @@ A critical step in verifying neural feedback loops is creating accurate, tractab
 For global stability analysis, I derived a method to calculate **Global Sector Bounds** for fully connected Feedforward Neural Networks (FFNNs). This method assumes the network has **no bias terms** (or biases are handled separately), ensuring the origin is an equilibrium point.
 
 <center>
-  <img src="{{ base_path }}/images/NN_sector_bounds.png" alt="Global Sector Bounds" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <img src="{{ base_path }}/images/NN_sector_bounds.png" alt="Global Sector Bounds" style="width: 50%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 2:</strong> Validation of Global Sector Bounds. The black line represents the neural network output $NN(z)$, which is strictly contained within the linear envelope formed by the lower bound $\Gamma_1 z$ (blue) and upper bound $\Gamma_2 z$ (red) for all 100 random samples.</em>
 </center>
@@ -49,7 +49,7 @@ As shown in **Table 1**, our method computes bounds orders of magnitude faster t
 Global bounds can be conservative. To address this, I developed a novel **Local Sector Bound** formulation.
 
 <center>
-  <img src="{{ base_path }}/images/local_schematic.png" alt="Local Bound Schematic" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <img src="{{ base_path }}/images/local_schematic.svg" alt="Local Bound Schematic" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 3:</strong> Schematic illustration of the recursive procedure for computing local sector bounds. We propagate interval bounds layer-by-layer to determine the precise slope matrices $\gamma_1$ and $\gamma_2$.</em>
 </center>
