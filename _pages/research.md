@@ -224,40 +224,47 @@ As a rigorous benchmark, I also developed a comprehensive **Integral Quadratic C
 ---
 
 ## 4. Crowd Dynamics & Emergency Evacuation
-In addition to neural network verification, I research **multi-agent systems** applied to public safety. Specifically, I develop dynamical models to simulate and optimize crowd behavior during active shooter incidents.
+Beyond neural network verification, my research extends to **multi-agent systems** and public safety. I develop dynamical models to simulate and optimize crowd behavior under high-stress conditions, specifically focusing on active shooter scenarios.
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 20px;">
   
   <div style="flex: 1; min-width: 300px; max-width: 450px; text-align: center;">
-    <video width="100%" controls autoplay loop muted playsinline style="border: 1px solid #ddd;">
-      <source src="{{ base_path }}/images/evacuation_baseline.mp4" type="video/mp4">
+    <video width="100%" controls autoplay loop muted playsinline style="border: 1px solid #ddd; display: block;">
+      <source src="/images/evacuation_baseline.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <br>
-    <em style="font-size: 0.9em;"><strong>Simulation A: Baseline Crowd.</strong><br>Without optimized guidance, the crowd (blue) is vulnerable to the predator (red cross), resulting in higher casualties ($K$).</em>
+    <div style="text-align: left; font-size: 0.9em; line-height: 1.4em; padding: 5px;">
+      <em><strong>Simulation A: Uncoordinated Evacuation (Baseline).</strong><br>
+      In the absence of an optimized guidance strategy, the crowd (blue agents) relies solely on local repulsive forces. This results in disorganized scattering, increasing vulnerability to the predator (red cross) and yielding higher casualty rates ($K$).</em>
+    </div>
   </div>
 
   <div style="flex: 1; min-width: 300px; max-width: 450px; text-align: center;">
-    <video width="100%" controls autoplay loop muted playsinline style="border: 1px solid #ddd;">
-      <source src="{{ base_path }}/images/evacuation_optimized.mp4" type="video/mp4">
+    <video width="100%" controls autoplay loop muted playsinline style="border: 1px solid #ddd; display: block;">
+      <source src="/images/evacuation_optimized.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <br>
-    <em style="font-size: 0.9em;"><strong>Simulation B: Optimized Guidance.</strong><br>Using our tuned parameters ($\alpha=1.625, \lambda=0.71$), the guide (green cross) effectively steers the swarm to the safe zone (green area), significantly minimizing casualties.</em>
+    <div style="text-align: left; font-size: 0.9em; line-height: 1.4em; padding: 5px;">
+      <em><strong>Simulation B: Optimized Guidance Strategy.</strong><br>
+      Implementing our tuned parameters ($\alpha=1.625, \lambda=0.71$), the designated guide (green cross) dynamically steers the swarm toward the Safe Zone (green region). This cooperative behavior significantly mitigates casualties by optimizing the trade-off between evasion and evacuation.</em>
+    </div>
   </div>
 
 </div>
 
 ### The Predator-Swarm-Guide (PSG) Model
-We introduced the **Predator-Swarm-Guide (PSG)** model, a hybrid framework that models the complex interactions between three distinct entities:
-1.  **The Predator (Shooter):** An agent tracking and repelling the crowd.
-2.  **The Swarm (Crowd):** Agents exhibiting pairwise repulsive/attractive forces (social friction) and wall interactions.
-3.  **The Guide (Leader):** A trusted agent attempting to steer the swarm to a "Safe Zone".
+We proposed the **Predator-Swarm-Guide (PSG)** model, a hybrid framework designed to capture the complex interplay between three distinct agent types:
+1.  **The Predator:** A non-cooperative agent that actively tracks and repels the crowd.
+2.  **The Swarm:** A multi-agent system governed by social force interactions (pairwise repulsion/attraction) and environmental constraints.
+3.  **The Guide:** A strategic agent tasked with steering the swarm toward a designated "Safe Zone" while minimizing interaction with the predator.
 
 ### Key Contributions
-* **Dynamic Guidance Strategy:** We modeled a guiding agent whose movement is governed by a weighting parameter $\lambda$, optimizing the trade-off between "moving toward safety" and "evading the shooter".
-* **Casualty Minimization:** We formulated an optimization problem to tune crowd cohesion $\alpha_1$ and guidance strategy $\lambda$, demonstrating that rational cooperation between the guide and crowd significantly reduces casualties.
-* **Equilibrium Analysis:** By analyzing the continuum-limit version of the model, we derived theoretical predictions for the crowd's steady-state configuration (e.g., forming annular shapes around the predator).
+* **Dynamic Guidance Formulation:** We modeled the guide's trajectory using a weighted objective function parameterized by $\lambda$, which balances the competing goals of "target acquisition" (moving to safety) and "threat evasion" (avoiding the shooter).
+* **Optimization of Casualty Mitigation:** We formulated a nonlinear optimization problem to tune the crowd cohesion parameter ($\alpha_1$) and the guidance weight ($\lambda$). Our results demonstrate that rational cooperation between the guide and the swarm significantly reduces total casualties compared to baseline evacuation methods.
+* **Continuum Limit Analysis:** By deriving the mean-field approximation of the particle model, we provided theoretical characterizations of the crowd's steady-state spatial distribution, predicting emergent formations such as annular clustering around the threat.
+
 ---
 
 ### Related Publications
