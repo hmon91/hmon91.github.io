@@ -23,7 +23,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 ## Work Experience
 * **Graduate Research & Teaching Assistant**, Northeastern University (Sep 2021 – Present)
-* **Control Systems Engineer**, Safatco (Gas Turbine Industry) (Dec 2019 – Oct 2020)
+* **Control Systems Engineer**, Safatco (Dec 2019 – Oct 2020)
     * Reverse engineered and developed electromagnetic servo valves for the fuel control system of industrial gas turbines.
 * **R&D Engineer**, Sharif Technology Services (Satellite-building Project) (Apr 2018 – Oct 2019)
     * Developed code for estimating satellite attitude and position using EKF and UKF.
