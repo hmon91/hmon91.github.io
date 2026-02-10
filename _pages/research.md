@@ -102,7 +102,7 @@ Iterating **S1–S2** from the input to the output yields constant matrices $\ga
 * **Advantage:** These bounds are significantly tighter than norm-based approximations and avoid the affine offsets used in methods like CROWN, making them compatible with robust control frameworks.
 
 <center>
-  <img src="{{ base_path }}/images/local_plots.jpg" alt="Local Stability Plots" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
+  <img src="{{ base_path }}/images/local_plots.png" alt="Local Stability Plots" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
   <br>
   <em><strong>Figure 4:</strong> Visualization of Local Sector Bounds for different input intervals. The yellow region indicates the computed sector, which tightly encloses the neural network's nonlinearity (black line), ensuring valid stability certificates for the specific operating region.</em>
 </center>
