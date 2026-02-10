@@ -101,12 +101,23 @@ Iterating **S1–S2** from the input to the output yields constant matrices $\ga
 * **Innovation:** By restricting the analysis to a specific compact set of inputs, we calculate tighter, input-dependent slope matrices.
 * **Advantage:** These bounds are significantly tighter than norm-based approximations and avoid the affine offsets used in methods like CROWN, making them compatible with robust control frameworks.
 
-<center>
-  <img src="{{ base_path }}/images/local_plots.png" alt="Local Stability Plots" style="width: 100%; max-width: 600px; border: 1px solid #ddd; padding: 5px;">
-  <br>
-  <em><strong>Figure 4:</strong> Visualization of Local Sector Bounds for different input intervals. The yellow region indicates the computed sector, which tightly encloses the neural network's nonlinearity (black line), ensuring valid stability certificates for the specific operating region.</em>
-</center>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
+  
+  <div style="flex: 1; min-width: 300px; max-width: 500px; text-align: center;">
+    <img src="{{ base_path }}/images/difbounds.png" alt="Comparison with CROWN" style="width: 100%; border: 1px solid #ddd; padding: 5px;">
+    <br>
+    <em style="font-size: 0.9em;"><strong>Figure 4a:</strong> Comparison of bound tightness. Our "Local Sector Bound" (yellow) is significantly tighter than the standard interval-based bounds used in CROWN/IBP (light blue), reducing conservatism in stability verification.</em>
+  </div>
+
+  <div style="flex: 1; min-width: 300px; max-width: 500px; text-align: center;">
+    <img src="{{ base_path }}/images/local_plots.jpg" alt="Local Stability Plots" style="width: 100%; border: 1px solid #ddd; padding: 5px;">
+    <br>
+    <em style="font-size: 0.9em;"><strong>Figure 4b:</strong> Visualization of Local Sector Bounds for different input intervals. The yellow region indicates the computed sector, which tightly encloses the neural network's nonlinearity (black line).</em>
+  </div>
+
+</div>
 <br>
+
 ---
 
 ## 2. Stability Verification & Safety
