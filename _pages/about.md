@@ -9,6 +9,8 @@ redirect_from:
   - /about.html
 ---
 
+{% include base_path %}
+
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
@@ -26,10 +28,6 @@ I develop theory, algorithms, and software for certifying learning-enabled syste
 
 <center>
   <img src="/images/frankasiami1.gif" alt="Franka Emika Robot Demo" style="width: 100%; max-width: 500px; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
-  <br>
-  <div style="text-align: center; font-size: 0.9em; padding: 5px;">
-    <em><strong>Experimental Setup:</strong> Real-time manipulation and control demonstration using the Franka Emika Panda robot in the Siami Lab.</em>
-  </div>
 </center>
 <br>
 
