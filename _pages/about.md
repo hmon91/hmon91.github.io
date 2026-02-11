@@ -9,6 +9,8 @@ redirect_from:
   - /about.html
 ---
 
+{% include base_path %}
+
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
@@ -24,14 +26,8 @@ I am a **Ph.D. researcher** at Northeastern University developing foundational m
 
 I develop theory, algorithms, and software for certifying learning-enabled systems operating in complex, safety-critical environments, with applications spanning autonomous systems and robotics.
 
-<center>
-  <img src="https://hmon91.github.io/images/frankasiami.gif" alt="Franka Emika Robot Demo" style="width: 100%; max-width: 500px; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
-  <br>
-  <div style="text-align: center; font-size: 0.9em; padding: 5px;">
-    <em><strong>Experimental Setup:</strong> Real-time manipulation and control demonstration using the Franka Emika Panda robot in the Siami Lab.</em>
-  </div>
-</center>
-<br>
+![Franka Emika Robot Demo](/images/frankasiami.gif)
+*Experimental Setup: Real-time manipulation and control demonstration using the Franka Emika Panda robot in the Siami Lab.*
 
 ### Research Highlights
 * **Scalable Verification:** Developed a scalable stability and robustness verification pipeline for learning-enabled autonomous systems, achieving up to ~\\(10^4 \times\\) speedup over state-of-the-art methods.
