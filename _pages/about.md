@@ -25,7 +25,7 @@ I am a **Ph.D. researcher** at Northeastern University developing foundational m
 I develop theory, algorithms, and software for certifying learning-enabled systems operating in complex, safety-critical environments, with applications spanning autonomous systems and robotics.
 
 <center>
-  <img src="{{ base_path }}/images/frankasiami.gif" alt="Franka Emika Robot Demo" style="width: 100%; max-width: 500px; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+  <img src="/images/frankasiami.gif" alt="Franka Emika Robot Demo" style="width: 100%; max-width: 500px; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
   <br>
   <div style="text-align: center; font-size: 0.9em; padding: 5px;">
     <em><strong>Experimental Setup:</strong> Real-time manipulation and control demonstration using the Franka Emika Panda robot in the Siami Lab.</em>
