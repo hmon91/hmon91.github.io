@@ -65,7 +65,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 * **Certified Autonomous Driving Control:** Formulated vehicle lateral control under neural-network feedback using IQC-based parametrization to achieve formally certified performance bounds.
 
----
+
 
 ### Neural Network Verification & Learning-Enabled Systems
 
@@ -85,7 +85,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 * **System-of-Systems Robustness:** Developed verification methods for AI-enabled systems-of-systems under time delays and parametric uncertainty to strengthen safety guarantees in autonomous settings.
 
----
+
 
 ### Spacecraft, Orbital Mechanics & GNC
 
@@ -105,7 +105,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 * **Reaction Wheel Engineering:** Engineered verification and calibration procedures for satellite reaction-wheel hardware during aerospace manufacturing.
 
----
+
 
 ### Aircraft & Fluid Dynamics
 
@@ -119,7 +119,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 * **Thermofluid System Modeling:** Modeled internal fluid flow systems using conservation laws to analyze pressure drop and heat transfer regimes numerically.
 
----
+
 
 ### Networked & Data-Driven Dynamical Systems
 
@@ -135,7 +135,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 * **Crowd Flow & Egress Optimization:** Modeled crowd dynamics via fluid analogies and designed optimal evacuation strategies under uncertainty.
 
----
+
 
 ### Mechanical & Industrial Systems
 
@@ -145,7 +145,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 * **Industrial Bearing Modeling:** Modeled and validated industrial bearing geometries in SolidWorks with tolerance analysis for manufacturing precision.
 
----
+
 
 ### Computational & Systems Programming
 
@@ -155,27 +155,6 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 
 
-
-## Selected Projects
-
-### Robotics, AI & Control
-* **Safe Control Learning:** Designed learning-based controllers for a network of quadrotors using a scalable NN-in-the-loop verification framework.
-* **Autonomous Lab Setup:** Installed and calibrated a Quanser autonomous lab environment with multi-camera sensing for real-time 6-DOF pose estimation of drones and ground vehicles.
-* **Imitation Learning for MPC:** Implemented safe imitation learning of a Model Predictive Control (MPC) policy for nonlinear inverted pendulum dynamics.
-* **Robotic Manipulation:** Configured two Franka Emika robotic arms and established real-time coordination for interactive tasks (Tic-Tac-Toe).
-* **Data-Driven Identification:** Applied Sparse Identification of Nonlinear Dynamics (SINDy) and Sum-of-Squares (SOS) methods to discover governing equations and certify stability from data.
-* **Embedded Control:** Designed a controller-observer system for a quadrotor and deployed the closed-loop system on an Arduino platform.
-
-### Aerospace & Dynamics
-* **High-Fidelity Spacecraft GNC:** Developed nonlinear spacecraft attitude/orbit dynamics models with integrated state estimation (EKF/UKF) and feedback control; evaluated performance under sensor noise and disturbances.
-* **Fluid Dynamics (CFD):** Conducted CFD simulations using Gambit/Fluent to analyze quadrotor ground-effect flows and re-entry vehicle aerodynamics.
-* **Structural Dynamics:** Performed finite-element-based analysis of an aircraft wing box using Abaqus to evaluate modal characteristics and structural response.
-* **Complex Dynamics Modeling:** Modeled fuel sloshing effects in spacecraft attitude dynamics and analyzed nonlinear momentum transfer control via feedback linearization.
-* **Aircraft Control:** Analyzed statistical control of aircraft encountering Clear Air Turbulence (CAT) considering measurement noise effects.
-* **Orbital Mechanics:** Modeled satellite ground tracks, eclipse times, and visibility to ground stations.
-
-### Software Development
-* **Reversi Game Engine:** Programmed an automatic "Reversi" game in C, including game-state modeling and algorithmic decision logic.
 
 ## Technical Skills
 * **Robotics & Perception:** 6-DoF rigid-body dynamics, robotic arms, real-time control, multi-camera sensing, sensor calibration, EKF/UKF.
