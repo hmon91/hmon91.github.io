@@ -12,6 +12,7 @@ redirect_from:
 You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 ## Education
+---
 * **Ph.D. in Electrical Engineering**, Northeastern University, Boston, USA (Sep 2021 – Present)
     * **GPA:** 3.81
     * **Thesis:** Scalable Method for Stability and Robustness Verification of Systems with NN Feedback using Positivity Constraints.
@@ -22,6 +23,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
     * **Thesis:** Attitude Control of an Under-Actuated Satellite by Two Reaction Wheels.
 
 ## Research & Impact
+---
 * **Novel Neural Network Bounding:** Designed global & local NN bounding (depth‑agnostic) methods, enabling ~10× faster bound computation and tight, input‑aware sector envelopes for controllers.
 * **Scalable Verification Pipeline:** Built a scalable robust stability verification pipeline for NN‑in‑the‑loop systems under positivity constraints, achieving up to ~10⁴× speedup over state-of-the-art baselines.
 * **Sim-to-Real Gap:** Validated learning-enabled control frameworks through extensive simulation and hardware-informed experiments, bridging the gap between theoretical guarantees and real-world robotic performance.
@@ -30,6 +32,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 * **Space Robotics Optimization:** Derived coupled attitude–orbit dynamics of a solar sail via center-of-mass manipulation, including interplanetary path optimization using SNOPT.
 
 ## Work Experience
+---
 * **Graduate Research & Teaching Assistant**, Northeastern University (Sep 2021 – Present)
     * Supported autonomous experimentation environments (Quanser, Franka Emika) and reproducible computational pipelines.
     * Research in control, estimation, and learning-enabled autonomy.
@@ -44,7 +47,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
     * Conducted R&D for a satellite reaction wheel; drafted verification and calibration procedures.
 
 ## Selected Projects
-
+---
 ### Robotics, AI & Control
 
 * **Autonomous Lab Deployment:** Installed and calibrated multi-camera sensing systems in the Quanser autonomous lab, enabling real-time 6-DoF pose estimation for aerial and ground robots and supporting hardware-in-the-loop autonomy experiments.
@@ -157,6 +160,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 
 ## Technical Skills
+---
 * **Robotics & Perception:** 6-DoF rigid-body dynamics, robotic arms, real-time control, multi-camera sensing, sensor calibration, EKF/UKF.
 * **Machine Learning:** Imitation Learning, Reinforcement Learning, PyTorch, TensorFlow, AutoLiRPA, JAX-Verify.
 * **Control & Optimization:** Nonlinear Control, MPC, Robust Control, Reachability Analysis, Lyapunov Methods, SNOPT, CVX.
@@ -164,6 +168,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 * **Simulation Tools:** Simulink, Fluent, Gambit, SolidWorks, Abaqus, ANSYS.
 
 ## Teaching & Mentorship
+---
 * **Teaching Assistant:**
     * *Embedded Design Enabling Robotics* (Spring 2026)
     * *Linear Systems Analysis* (Fall 2025)
@@ -172,6 +177,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 * **Mentorship:** Capstone project "Robotic Gloves for Teaching Piano" (Summer 2024).
 
 ## Professional Service
+---
 * **Leadership:** Founder & President of Northeastern ECE Ph.D. Council.
 * **Reviewer:** IEEE CDC, ACC, Control Systems Letters, IFAC CPHS.
 * **Memberships:** IEEE, Society for Risk Analysis (SRA).
