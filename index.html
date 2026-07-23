@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamidreza Montazeri Hedesh — Safety Verification of AI in the Control Loop</title>
+<meta name="description" content="Hamidreza Montazeri Hedesh is a PhD researcher at Northeastern University developing scalable methods that certify stability, robustness, and safety for neural-network decision-making in the control loop.">
+<meta property="og:title" content="Hamidreza Montazeri Hedesh">
+<meta property="og:description" content="Certifying that neural control stays safe when it's in the loop — formal verification for learning-enabled dynamical systems.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hmon91.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C1424'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%2315A3B0' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%23C0791A'/%3E%3Cpath d='M16 7 A9 9 0 0 1 24.5 13' fill='none' stroke='%23C0791A' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<script>
+/* Set initial theme before paint to avoid flash. In-memory only (no storage). */
+(function () {
+  try {
+    var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  } catch (e) {}
+})();
+</script>
+<style>
+  :root {
+    --paper:#F5F7F9;
+    --surface:#FFFFFF;
+    --surface-2:#FBFCFD;
+    --ink:#0C1424;
+    --muted:#586074;
+    --faint:#8A93A6;
+    --teal:#0E7C86;
+    --teal-bright:#15A3B0;
+    --amber:#B4711A;
+    --border:#E4E8EC;
+    --border-strong:#CFD6DE;
+    --grid:rgba(14,124,134,0.055);
+    --chip:#EEF3F4;
+    --shadow:0 1px 2px rgba(12,20,36,.05), 0 14px 34px -18px rgba(12,20,36,.16);
+    --shadow-lift:0 2px 4px rgba(12,20,36,.06), 0 22px 44px -20px rgba(12,20,36,.24);
+  }
+  [data-theme="dark"] {
+    --paper:#0A1220;
+    --surface:#111C2E;
+    --surface-2:#0E1826;
+    --ink:#E9EDF3;
+    --muted:#98A3B6;
+    --faint:#6C788D;
+    --teal:#2FB6C4;
+    --teal-bright:#4FD2DE;
+    --amber:#E0A43A;
+    --border:#1E2C42;
+    --border-strong:#2B3C58;
+    --grid:rgba(79,210,222,0.06);
+    --chip:#152238;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 16px 36px -18px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.4), 0 26px 50px -20px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body {
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a { color:var(--teal); text-decoration:none; }
+  img { max-width:100%; display:block; }
+  ::selection { background:var(--teal); color:#fff; }
+
+  .wrap { max-width:1140px; margin:0 auto; padding:0 26px; }
+
+  .mono {
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-feature-settings:"ss01";
+  }
+  .eyebrow {
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.72rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:500;
+  }
+  .accent { color:var(--teal); }
+
+  h1, h2, h3 {
+    font-family:"Archivo", system-ui, sans-serif;
+    color:var(--ink);
+    margin:0;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position:sticky; top:0; z-index:60;
+    background:color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner {
+    max-width:1140px; margin:0 auto; padding:0 26px;
+    height:66px; display:flex; align-items:center; gap:20px;
+  }
+  .brand {
+    display:flex; align-items:center; gap:10px;
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:500; font-size:.86rem; letter-spacing:.02em;
+    color:var(--ink); white-space:nowrap;
+  }
+  .brand-mark {
+    width:26px; height:26px; border-radius:7px; flex:none;
+    background:var(--ink);
+    position:relative;
+  }
+  .brand-mark::before {
+    content:""; position:absolute; inset:5px; border-radius:50%;
+    border:2px solid var(--teal-bright);
+  }
+  .brand-mark::after {
+    content:""; position:absolute; left:calc(50% - 2px); top:calc(50% - 2px);
+    width:4px; height:4px; border-radius:50%; background:var(--amber);
+  }
+  .brand .full { }
+  .brand .short { display:none; }
+  .nav-links { display:flex; gap:26px; margin-left:auto; align-items:center; }
+  .nav-links a {
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.76rem; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--muted); font-weight:450; position:relative; padding:4px 0;
+  }
+  .nav-links a:hover { color:var(--ink); }
+  .nav-links a::after {
+    content:""; position:absolute; left:0; bottom:-2px; height:2px; width:0;
+    background:var(--teal); transition:width .25s ease;
+  }
+  .nav-links a:hover::after { width:100%; }
+
+  .nav-right { display:flex; align-items:center; gap:12px; margin-left:8px; }
+  .btn {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.76rem; letter-spacing:.11em; text-transform:uppercase; font-weight:500;
+    padding:9px 15px; border-radius:9px; border:1px solid transparent;
+    cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn-solid { background:var(--teal); color:#fff; }
+  .btn-solid:hover { background:var(--teal-bright); transform:translateY(-1px); box-shadow:var(--shadow); }
+  .btn-ghost {
+    background:transparent; color:var(--ink); border:1px solid var(--border-strong);
+  }
+  .btn-ghost:hover { border-color:var(--teal); color:var(--teal); }
+  .icon-btn {
+    width:38px; height:38px; border-radius:9px; border:1px solid var(--border-strong);
+    background:transparent; color:var(--muted); cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    transition:color .18s ease, border-color .18s ease;
+  }
+  .icon-btn:hover { color:var(--teal); border-color:var(--teal); }
+  .icon-btn svg { width:17px; height:17px; }
+  .nav-toggle { display:none; }
+  .theme-toggle .moon { display:none; }
+  [data-theme="dark"] .theme-toggle .moon { display:block; }
+  [data-theme="dark"] .theme-toggle .sun { display:none; }
+
+  /* ---------- Layout ---------- */
+  .section { padding:clamp(66px, 10vw, 118px) 0; position:relative; }
+  .section-head { margin-bottom:44px; max-width:640px; }
+  .section-head h2 { font-size:clamp(1.85rem, 3.4vw, 2.7rem); margin-top:12px; }
+  .section-head p { color:var(--muted); margin:16px 0 0; font-size:1.06rem; }
+
+  /* Reveal */
+  .reveal { opacity:0; transform:translateY(14px); transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
+  .reveal.in { opacity:1; transform:none; }
+
+  /* ---------- Hero ---------- */
+  .hero { position:relative; overflow:hidden; padding-top:clamp(48px,7vw,84px); padding-bottom:clamp(56px,8vw,96px); }
+  .hero::before {
+    content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:38px 38px;
+    mask-image:radial-gradient(120% 90% at 70% 20%, #000 30%, transparent 78%);
+    -webkit-mask-image:radial-gradient(120% 90% at 70% 20%, #000 30%, transparent 78%);
+  }
+  .hero-inner {
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:1.05fr .95fr; gap:52px; align-items:center;
+  }
+  .id-row { display:flex; align-items:center; gap:13px; margin-bottom:22px; }
+  .avatar {
+    width:52px; height:52px; border-radius:50%; flex:none; object-fit:cover;
+    border:2px solid var(--surface); box-shadow:0 0 0 1px var(--border-strong);
+    background:var(--chip);
+  }
+  .id-name {
+    font-family:"IBM Plex Mono", monospace; font-size:.8rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--muted); line-height:1.5;
+  }
+  .hero h1 {
+    font-size:clamp(2.45rem, 5.6vw, 4.35rem); font-weight:800;
+    margin:14px 0 0; letter-spacing:-0.03em;
+  }
+  .hero .lede {
+    color:var(--muted); font-size:1.12rem; margin:24px 0 0; max-width:37em;
+  }
+  .affil {
+    font-family:"IBM Plex Mono", monospace; font-size:.73rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--faint); margin:26px 0 0;
+    display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center;
+  }
+  .affil .dot { color:var(--teal); }
+  .links { display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 0; }
+  .link-pill {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono", monospace; font-size:.76rem; letter-spacing:.04em;
+    padding:8px 13px; border-radius:9px; border:1px solid var(--border-strong);
+    color:var(--ink); background:var(--surface); transition:border-color .18s ease, color .18s ease, transform .18s ease;
+  }
+  .link-pill svg { width:15px; height:15px; opacity:.75; }
+  .link-pill:hover { border-color:var(--teal); color:var(--teal); transform:translateY(-1px); }
+  .link-pill:hover svg { opacity:1; }
+
+  .stats { display:flex; flex-wrap:wrap; gap:14px; margin:34px 0 0; }
+  .stat {
+    flex:1 1 180px; border:1px solid var(--border); border-radius:12px;
+    background:var(--surface-2); padding:16px 18px;
+  }
+  .stat b {
+    font-family:"Archivo", sans-serif; font-weight:700; font-size:1.7rem;
+    color:var(--ink); letter-spacing:-.02em; display:block;
+  }
+  .stat span {
+    font-family:"IBM Plex Mono", monospace; font-size:.68rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--muted); display:block; margin-top:5px; line-height:1.45;
+  }
+
+  /* Instrument panel (phase portrait) */
+  .panel {
+    position:relative; border:1px solid var(--border-strong); border-radius:16px;
+    background:var(--surface); box-shadow:var(--shadow); overflow:hidden;
+  }
+  .panel-bar {
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:11px 15px; border-bottom:1px solid var(--border);
+    font-family:"IBM Plex Mono", monospace; font-size:.66rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint);
+  }
+  .panel-bar .live { display:flex; align-items:center; gap:7px; color:var(--teal); }
+  .panel-bar .live::before {
+    content:""; width:7px; height:7px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 0 0 color-mix(in srgb, var(--teal) 60%, transparent);
+    animation:pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--teal) 55%,transparent);} 70%{box-shadow:0 0 0 8px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
+  .canvas-wrap { position:relative; aspect-ratio:1 / 1; width:100%; }
+  #phase { width:100%; height:100%; display:block; }
+  .tick { position:absolute; width:11px; height:11px; z-index:2; pointer-events:none; }
+  .tick::before, .tick::after { content:""; position:absolute; background:var(--border-strong); }
+  .tick::before { width:11px; height:2px; top:0; } .tick::after { width:2px; height:11px; left:0; }
+  .tick.tl { top:12px; left:12px; } .tick.tr { top:12px; right:12px; transform:scaleX(-1); }
+  .tick.bl { bottom:12px; left:12px; transform:scaleY(-1); } .tick.br { bottom:12px; right:12px; transform:scale(-1,-1); }
+  .panel-cap {
+    padding:12px 15px 14px; border-top:1px solid var(--border);
+    font-family:"IBM Plex Mono", monospace; font-size:.68rem; line-height:1.55;
+    color:var(--muted); letter-spacing:.01em;
+  }
+  .panel-cap .k { color:var(--amber); }
+
+  /* ---------- Stat strip divider ---------- */
+  .strip {
+    border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+    background:var(--surface-2);
+  }
+  .strip-inner { display:grid; grid-template-columns:repeat(3,1fr); }
+  .strip-cell {
+    padding:26px 28px; border-right:1px solid var(--border);
+  }
+  .strip-cell:last-child { border-right:none; }
+  .strip-cell .lbl {
+    font-family:"IBM Plex Mono", monospace; font-size:.66rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--teal); margin-bottom:9px;
+  }
+  .strip-cell .txt { color:var(--muted); font-size:.98rem; }
+  .strip-cell .txt b { color:var(--ink); font-weight:600; }
+
+  /* ---------- About ---------- */
+  .about-grid { display:grid; grid-template-columns:1.4fr .9fr; gap:52px; align-items:start; }
+  .about-body p { color:var(--muted); margin:0 0 18px; }
+  .about-body p strong { color:var(--ink); font-weight:600; }
+  .thesis {
+    margin-top:26px; border:1px solid var(--border); border-left:3px solid var(--teal);
+    border-radius:12px; background:var(--surface-2); padding:20px 22px;
+  }
+  .thesis .lbl {
+    font-family:"IBM Plex Mono", monospace; font-size:.66rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--teal); margin-bottom:8px;
+  }
+  .thesis .t { font-family:"Archivo", sans-serif; font-weight:600; font-size:1.12rem; color:var(--ink); line-height:1.35; letter-spacing:-.01em; }
+  .media {
+    border:1px solid var(--border-strong); border-radius:14px; overflow:hidden;
+    background:var(--surface); box-shadow:var(--shadow);
+  }
+  .media img { width:100%; aspect-ratio:16/10; object-fit:cover; background:var(--chip); }
+  .media figcaption {
+    padding:11px 15px; border-top:1px solid var(--border);
+    font-family:"IBM Plex Mono", monospace; font-size:.66rem; line-height:1.5;
+    color:var(--muted); letter-spacing:.01em;
+  }
+
+  /* ---------- Research ---------- */
+  .pipeline {
+    display:flex; align-items:stretch; gap:0; flex-wrap:nowrap;
+    border:1px solid var(--border); border-radius:14px; overflow:hidden;
+    background:var(--surface-2); margin-bottom:40px;
+  }
+  .pl-node {
+    flex:1 1 0; min-width:0; padding:20px 18px; position:relative;
+    display:flex; flex-direction:column; gap:6px; border-right:1px solid var(--border);
+  }
+  .pl-node:last-child { border-right:none; }
+  .pl-node .idx {
+    font-family:"IBM Plex Mono", monospace; font-size:.64rem; letter-spacing:.14em;
+    color:var(--faint);
+  }
+  .pl-node .nm { font-family:"Archivo", sans-serif; font-weight:700; font-size:1rem; color:var(--ink); letter-spacing:-.01em; }
+  .pl-node .arrow { position:absolute; right:-9px; top:50%; transform:translateY(-50%); z-index:2; color:var(--teal); background:var(--surface-2); }
+  .pl-node:last-child .arrow { display:none; }
+  .pl-node .arrow svg { width:18px; height:18px; }
+
+  .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .card {
+    border:1px solid var(--border); border-radius:16px; background:var(--surface);
+    overflow:hidden; display:flex; flex-direction:column;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lift); border-color:var(--border-strong); }
+  .card-fig { height:184px; background:var(--chip); overflow:hidden; border-bottom:1px solid var(--border); position:relative; }
+  .card-fig img { width:100%; height:100%; object-fit:cover; }
+  .card-body { padding:22px 24px 24px; display:flex; flex-direction:column; flex:1; }
+  .tag {
+    align-self:flex-start;
+    font-family:"IBM Plex Mono", monospace; font-size:.63rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--teal); font-weight:500;
+    padding:4px 9px; border:1px solid var(--border-strong); border-radius:6px; margin-bottom:14px;
+  }
+  .card h3 { font-size:1.26rem; margin-bottom:10px; }
+  .card p { color:var(--muted); font-size:.98rem; margin:0 0 16px; }
+  .formula {
+    font-family:"IBM Plex Mono", monospace; font-size:.82rem; color:var(--ink);
+    background:var(--surface-2); border:1px solid var(--border); border-radius:8px;
+    padding:8px 12px; margin:0 0 16px; letter-spacing:.02em;
+  }
+  .card .ref { margin-top:auto; }
+  .card .ref a {
+    font-family:"IBM Plex Mono", monospace; font-size:.72rem; letter-spacing:.06em;
+    display:inline-flex; align-items:center; gap:7px; color:var(--teal); font-weight:500;
+  }
+  .card .ref a svg { width:13px; height:13px; transition:transform .18s ease; }
+  .card .ref a:hover svg { transform:translate(2px,-2px); }
+
+  .fig-wide { margin:0 0 40px; }
+
+  /* ---------- Publications ---------- */
+  .pub-group + .pub-group { margin-top:44px; }
+  .pub-group > .gl {
+    font-family:"IBM Plex Mono", monospace; font-size:.7rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--teal); margin-bottom:8px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .pub-group > .gl::after { content:""; height:1px; flex:1; background:var(--border); }
+  .pub {
+    display:grid; grid-template-columns:150px 1fr; gap:22px;
+    padding:22px 0; border-bottom:1px solid var(--border); align-items:start;
+  }
+  .pub:last-child { border-bottom:none; }
+  .pub-meta { display:flex; flex-direction:column; gap:7px; }
+  .venue {
+    font-family:"IBM Plex Mono", monospace; font-size:.72rem; letter-spacing:.05em;
+    color:var(--ink); font-weight:500;
+  }
+  .badge {
+    align-self:flex-start;
+    font-family:"IBM Plex Mono", monospace; font-size:.6rem; letter-spacing:.1em;
+    text-transform:uppercase; padding:3px 8px; border-radius:5px;
+  }
+  .badge.published { background:color-mix(in srgb, var(--teal) 16%, transparent); color:var(--teal); }
+  .badge.accepted { background:color-mix(in srgb, var(--amber) 20%, transparent); color:var(--amber); }
+  .badge.submitted { background:var(--chip); color:var(--muted); }
+  .pub-body h3 { font-size:1.12rem; line-height:1.32; margin-bottom:8px; }
+  .pub-body h3 a { color:var(--ink); transition:color .18s ease; }
+  .pub-body h3 a:hover { color:var(--teal); }
+  .authors { color:var(--muted); font-size:.94rem; margin:0 0 10px; }
+  .authors b { color:var(--ink); font-weight:600; }
+  .pub-links { display:flex; flex-wrap:wrap; gap:10px 18px; }
+  .pub-links a {
+    font-family:"IBM Plex Mono", monospace; font-size:.71rem; letter-spacing:.05em;
+    display:inline-flex; align-items:center; gap:6px; color:var(--teal); font-weight:500;
+  }
+  .pub-links a svg { width:12px; height:12px; }
+  .pub-links a.plain { color:var(--faint); }
+  .scholar-note {
+    margin-top:34px; font-family:"IBM Plex Mono", monospace; font-size:.8rem;
+    color:var(--muted); display:flex; align-items:center; gap:9px;
+  }
+  .scholar-note a { color:var(--teal); }
+
+  /* ---------- Talks & Teaching ---------- */
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .block h3 {
+    font-family:"IBM Plex Mono", monospace; font-size:.74rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--teal); font-weight:500; margin-bottom:18px;
+  }
+  .tline { border-left:2px solid var(--border); padding:0 0 0 20px; }
+  .tline .item { position:relative; padding-bottom:20px; }
+  .tline .item:last-child { padding-bottom:0; }
+  .tline .item::before {
+    content:""; position:absolute; left:-25px; top:6px; width:8px; height:8px;
+    border-radius:50%; background:var(--surface); border:2px solid var(--teal);
+  }
+  .tline .head { font-family:"Archivo", sans-serif; font-weight:600; font-size:1.02rem; color:var(--ink); letter-spacing:-.01em; }
+  .tline .sub { color:var(--muted); font-size:.9rem; margin-top:3px; }
+  .tline .sub .mv { font-family:"IBM Plex Mono", monospace; font-size:.78rem; color:var(--faint); }
+
+  /* ---------- Contact / footer ---------- */
+  .contact { text-align:center; }
+  .contact .eyebrow { display:block; }
+  .contact h2 { font-size:clamp(2rem,4.4vw,3.2rem); margin:14px auto 0; max-width:16em; }
+  .contact .mail {
+    display:inline-block; margin-top:26px;
+    font-family:"Archivo", sans-serif; font-weight:700; font-size:clamp(1.15rem,2.4vw,1.6rem);
+    color:var(--teal); letter-spacing:-.01em; border-bottom:2px solid transparent;
+    transition:border-color .2s ease;
+  }
+  .contact .mail:hover { border-color:var(--teal); }
+  .contact .links { justify-content:center; margin-top:30px; }
+
+  footer {
+    border-top:1px solid var(--border); padding:34px 0;
+    background:var(--surface-2);
+  }
+  .foot-inner {
+    display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
+    font-family:"IBM Plex Mono", monospace; font-size:.72rem; letter-spacing:.04em; color:var(--faint);
+  }
+  .foot-inner a { color:var(--muted); }
+  .foot-inner a:hover { color:var(--teal); }
+  .foot-links { display:flex; gap:20px; flex-wrap:wrap; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:920px) {
+    .hero-inner { grid-template-columns:1fr; gap:40px; }
+    .panel { max-width:520px; }
+    .about-grid { grid-template-columns:1fr; gap:36px; }
+    .cards { grid-template-columns:1fr; }
+    .two { grid-template-columns:1fr; gap:34px; }
+    .strip-inner { grid-template-columns:1fr; }
+    .strip-cell { border-right:none; border-bottom:1px solid var(--border); }
+    .strip-cell:last-child { border-bottom:none; }
+    .pipeline { flex-wrap:wrap; }
+    .pl-node { flex:1 1 46%; border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .pl-node .arrow { display:none; }
+  }
+  @media (max-width:760px) {
+    .nav-links { display:none; position:absolute; top:66px; left:0; right:0;
+      flex-direction:column; gap:0; background:var(--surface); border-bottom:1px solid var(--border);
+      padding:8px 26px 16px; box-shadow:var(--shadow); margin-left:0; }
+    .nav.open .nav-links { display:flex; }
+    .nav-links a { padding:12px 0; border-bottom:1px solid var(--border); }
+    .nav-links a:last-child { border-bottom:none; }
+    .nav-toggle { display:inline-flex; margin-left:auto; }
+    .nav-right { margin-left:0; }
+    .brand .full { display:none; } .brand .short { display:inline; }
+    .pub { grid-template-columns:1fr; gap:12px; }
+    .pub-meta { flex-direction:row; align-items:center; gap:12px; }
+  }
+  @media (max-width:420px) {
+    body { font-size:16px; }
+    .pl-node { flex:1 1 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+    .reveal { opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand" aria-label="Home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="full">H. Montazeri Hedesh</span>
+      <span class="short">HMH</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#talks">Talks &amp; Teaching</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2 12h2M20 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5z"/></svg>
+      </button>
+      <a class="btn btn-solid" href="https://hmon91.github.io/cv/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+        CV
+      </a>
+      <button class="icon-btn nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-copy reveal in">
+          <div class="id-row">
+            <img class="avatar" src="https://hmon91.github.io/images/profile.jpg" alt="Portrait of Hamidreza Montazeri Hedesh" width="52" height="52" loading="eager" decoding="async">
+            <span class="id-name">Hamidreza Montazeri Hedesh</span>
+          </div>
+          <span class="eyebrow">Formal Verification · Learning-Enabled Control</span>
+          <h1>Proving neural control is safe when it&rsquo;s <span class="accent">in the loop</span>.</h1>
+          <p class="lede">I develop theory, algorithms, and software that certify stability, robustness, and safety for neural-network decision-making in safety-critical dynamical systems &mdash; often orders of magnitude faster than prior methods.</p>
+          <p class="affil mono">
+            <span>PhD Researcher</span><span class="dot">/</span>
+            <span>Control Systems &amp; Autonomy</span><span class="dot">/</span>
+            <span>Northeastern University</span><span class="dot">/</span>
+            <span>Boston, MA</span>
+          </p>
+          <div class="links">
+            <a class="link-pill" href="https://scholar.google.com/citations?user=5k1HFTkAAAAJ&hl=en" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zM6 13.4V17c0 1.7 2.7 3 6 3s6-1.3 6-3v-3.6l-6 3.3-6-3.3z"/></svg>Google Scholar</a>
+            <a class="link-pill" href="https://github.com/hmon91" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 8.8 21.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.8-2.4 4.7-4.6 4.9.3.3.6.9.6 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>GitHub</a>
+            <a class="link-pill" href="https://orcid.org/0009-0007-0041-830X" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8.3 7.4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-.9 3.1h1.8v6.1H7.4v-6zM11 10.5h3.2c2.1 0 3.2 1.4 3.2 3.05 0 1.7-1.3 3.05-3.3 3.05H11v-6.1zm1.8 1.5v3.1h1.3c1.1 0 1.7-.7 1.7-1.55 0-.9-.5-1.55-1.7-1.55h-1.3z"/></svg>ORCID</a>
+            <a class="link-pill" href="https://www.linkedin.com/in/hamidreza-montazeri/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM3 9h3v12H3V9zm6 0h2.9v1.7h.04c.4-.8 1.4-1.6 2.9-1.6 3.1 0 3.7 2 3.7 4.7V21h-3v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9V9z"/></svg>LinkedIn</a>
+            <a class="link-pill" href="mailto:montazerihedesh.h@northeastern.edu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <b>&asymp;10<sup>4</sup>&times;</b>
+              <span>Faster stability &amp; robustness verification vs. SDP-based methods</span>
+            </div>
+            <div class="stat">
+              <b>Tighter</b>
+              <span>Depth-agnostic sector bounds, tighter than CROWN</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal in">
+          <figure class="panel">
+            <div class="panel-bar">
+              <span>Phase&nbsp;portrait &mdash; x&#8321;/x&#8322;</span>
+              <span class="live">Certified</span>
+            </div>
+            <div class="canvas-wrap">
+              <span class="tick tl"></span><span class="tick tr"></span>
+              <span class="tick bl"></span><span class="tick br"></span>
+              <canvas id="phase" role="img" aria-label="Animated phase portrait: trajectories spiralling inward to an equilibrium, all contained within a certified region of attraction."></canvas>
+            </div>
+            <figcaption class="panel-cap">
+              A <span class="k">certified region of attraction</span> (amber). Every trajectory that starts inside is guaranteed to converge to the equilibrium &mdash; the safety property my work proves for neural feedback loops.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STRIP ============ -->
+  <section class="strip">
+    <div class="wrap">
+      <div class="strip-inner">
+        <div class="strip-cell reveal">
+          <div class="lbl">The problem</div>
+          <p class="txt">A neural network inside a feedback loop can turn small errors into <b>unsafe behavior</b>. Guarantees, not just good average performance, are what safety-critical autonomy needs.</p>
+        </div>
+        <div class="strip-cell reveal">
+          <div class="lbl">The approach</div>
+          <p class="txt">Bound the network with <b>sector bounds</b>, recast the closed loop as a <b>positive Lur&rsquo;e system</b>, then certify safety with simple linear-algebra checks.</p>
+        </div>
+        <div class="strip-cell reveal">
+          <div class="lbl">The payoff</div>
+          <p class="txt">Certificates that <b>scale</b> &mdash; up to ~10<sup>4</sup>&times; faster than SDP methods, and robust to real-world <b>delays and uncertainty</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">About</span>
+        <h2>Trustworthy, scalable AI for systems that move.</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-body reveal">
+          <p>I am a <strong>Ph.D. researcher</strong> at Northeastern University developing foundational methods for trustworthy and scalable artificial intelligence in dynamical systems. My work lives at the intersection of <strong>data-driven learning, optimization, and control theory</strong>, with a focus on formal verification, robustness, and safety guarantees for neural-network-based decision-making.</p>
+          <p>I build the theory, the algorithms, and the software to certify learning-enabled systems operating in complex, safety-critical environments &mdash; with applications spanning <strong>autonomous systems and robotics</strong>. The goal is simple to state and hard to deliver: mathematical proof that an AI controller keeps its system safe.</p>
+          <div class="thesis">
+            <div class="lbl">Doctoral thesis</div>
+            <div class="t">&ldquo;Scalable Method for Stability and Robustness Verification of Systems with NN Feedback using Positivity Constraints.&rdquo;</div>
+          </div>
+        </div>
+        <figure class="media reveal">
+          <img src="https://hmon91.github.io/images/frankasiami1.gif" alt="Franka Emika robotic manipulator running a verification demo" loading="lazy" decoding="async">
+          <figcaption class="mono">Verification methods in practice &mdash; a Franka Emika manipulator under a certified neural controller.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH ============ -->
+  <section class="section" id="research" style="background:var(--surface-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Research</span>
+        <h2>Making the loop certifiable.</h2>
+        <p>When a neural network sits inside a feedback loop, verifying safety means reasoning about the whole closed system at once. My pipeline turns that hard problem into tractable checks &mdash; and keeps the guarantee under delays and uncertainty.</p>
+      </div>
+
+      <!-- pipeline: this IS a real sequence (the method's flow), so it's ordered -->
+      <div class="pipeline reveal" aria-label="Verification pipeline">
+        <div class="pl-node">
+          <span class="idx mono">STAGE 01</span><span class="nm">Neural network</span>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+        <div class="pl-node">
+          <span class="idx mono">STAGE 02</span><span class="nm">Sector bounds</span>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+        <div class="pl-node">
+          <span class="idx mono">STAGE 03</span><span class="nm">Positivity certificate</span>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+        <div class="pl-node">
+          <span class="idx mono">STAGE 04</span><span class="nm">Safety guarantee</span>
+        </div>
+      </div>
+
+      <figure class="media fig-wide reveal">
+        <img src="https://hmon91.github.io/images/researchschematic.jpg" alt="Schematic of the scalable stability and robustness verification framework for neural feedback systems" loading="lazy" decoding="async" style="aspect-ratio:auto;">
+        <figcaption class="mono">Framework overview &mdash; scalable stability &amp; robustness verification of neural feedback systems.</figcaption>
+      </figure>
+
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card-fig"><img src="https://hmon91.github.io/images/NN_sector_bounds.png" alt="Neural network output enclosed by upper and lower linear sector bounds" loading="lazy" decoding="async"></div>
+          <div class="card-body">
+            <span class="tag">Sector bounds</span>
+            <h3>Neural network bounding</h3>
+            <div class="formula">&Gamma;&#8321; x &le; NN(x) &le; &Gamma;&#8322; x</div>
+            <p>I derive linear sector bounds that tightly enclose a network&rsquo;s nonlinear behavior &mdash; global bounds for whole-state-space analysis and local, input-aware bounds that beat CROWN-style methods while staying compatible with control tools.</p>
+            <div class="ref"><a href="https://doi.org/10.1109/LCSYS.2024.3416237" target="_blank" rel="noopener">IEEE L-CSS 2024 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-fig"><img src="https://hmon91.github.io/images/roa_plots.png" alt="Certified region-of-attraction plots for neural feedback systems" loading="lazy" decoding="async"></div>
+          <div class="card-body">
+            <span class="tag">Positive Lur&rsquo;e</span>
+            <h3>Stability &amp; safety certification</h3>
+            <p>By embedding the bounded network in a positive Lur&rsquo;e system, certifying stability reduces to checking whether simple matrices are <em>Metzler</em> and <em>Hurwitz</em> &mdash; no large SDPs. This runs up to ~10<sup>4</sup>&times; faster and also estimates the region of attraction.</p>
+            <div class="ref"><a href="https://doi.org/10.1109/CDC57313.2025.11312171" target="_blank" rel="noopener">IEEE CDC 2025 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-body" style="padding-top:26px;">
+            <span class="tag">Delays · Uncertainty</span>
+            <h3>Risk-aware verification</h3>
+            <p>Real systems face communication and computation <strong>delays</strong> and modeling error. I certify safety across all delay values with positivity-based certificates, and provide a high-fidelity <strong>IQC</strong> benchmark for worst-case robustness under structured uncertainty.</p>
+            <div class="ref"><a href="https://arxiv.org/abs/2510.06661" target="_blank" rel="noopener">ACC 2026 &middot; arXiv <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-body" style="padding-top:26px;">
+            <span class="tag">Multi-agent</span>
+            <h3>Crowd dynamics &amp; evacuation</h3>
+            <p>A parallel line of work in public safety: the <strong>Predator&ndash;Swarm&ndash;Guide</strong> model for steering crowds to safety under threat. I tune guidance strategies through nonlinear optimization to reduce casualties, backed by continuum-limit analysis.</p>
+            <div class="ref"><a href="https://doi.org/10.23919/ACC60939.2024.10645036" target="_blank" rel="noopener">ACC 2024 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PUBLICATIONS ============ -->
+  <section class="section" id="publications">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Publications</span>
+        <h2>Selected publications.</h2>
+        <p>Author names in <b>bold</b> are me. A complete and current list lives on Google Scholar.</p>
+      </div>
+
+      <div class="pub-group reveal">
+        <div class="gl mono">Journal articles</div>
+
+        <div class="pub">
+          <div class="pub-meta"><span class="venue">IEEE TAC</span><span class="badge submitted">Submitted &middot; 2026</span></div>
+          <div class="pub-body">
+            <h3>Taming Neural Feedback Loops via Positivity: Stability, Robustness, and Region of Attraction</h3>
+            <p class="authors"><b>H. Montazeri Hedesh</b>, M. Siami</p>
+            <div class="pub-links"><span class="mono" style="font-size:.71rem;color:var(--faint);">Submitted to IEEE Transactions on Automatic Control</span></div>
+          </div>
+        </div>
+
+        <div class="pub">
+          <div class="pub-meta"><span class="venue">IEEE L-CSS</span><span class="badge submitted">Submitted</span></div>
+          <div class="pub-body">
+            <h3>Distributed Adaptive Estimation under Unknown Nonlinear Source Dynamics without Shared Inputs</h3>
+            <p class="authors">M. Wafi, <b>H. Montazeri Hedesh</b>, M. Siami</p>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2511.07646" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>arXiv</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub">
+          <div class="pub-meta"><span class="venue">IEEE L-CSS</span><span class="badge published">Published &middot; 2024</span></div>
+          <div class="pub-body">
+            <h3><a href="https://doi.org/10.1109/LCSYS.2024.3416237" target="_blank" rel="noopener">Ensuring Both Positivity and Stability Using Sector-Bounded Nonlinearity for Systems With Neural Network Controllers</a></h3>
+            <p class="authors"><b>H. Montazeri Hedesh</b>, M. Siami &middot; <span class="mono" style="font-size:.85em;">vol. 8, pp. 1685&ndash;1690</span></p>
+            <div class="pub-links">
+              <a href="https://doi.org/10.1109/LCSYS.2024.3416237" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>DOI</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-group reveal">
+        <div class="gl mono">Conference papers</div>
+
+        <div class="pub">
+          <div class="pub-meta"><span class="venue">IFAC WC</span><span class="badge submitted">Submitted &middot; 2026</span></div>
+          <div class="pub-body">
+            <h3>Distributed Adaptive Estimation over Sensor Networks with Partially Unknown Source Dynamics</h3>
+            <p class="authors">M. Wafi, <b>H. Montazeri Hedesh</b>, M. Siami</p>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2511.07646" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>arXiv</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub">
+          <div class="pub-meta"><span class="venue">ACC 2026</span><span class="badge accepted">Accepted</span></div>
+          <div class="pub-body">
+            <h3>Delay-Independent Safe Control with Neural Networks: Positive Lur&rsquo;e Certificates for Risk-Aware Autonomy</h3>
+            <p class="authors"><b>H. Montazeri Hedesh</b>, M. Siami</p>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2510.06661" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>arXiv</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub">
+          <div class="pub-meta"><span class="venue">IEEE CDC</span><span class="badge published">Published &middot; 2025</span></div>
+          <div class="pub-body">
+            <h3><a href="https://doi.org/10.1109/CDC57313.2025.11312171" target="_blank" rel="noopener">Local Stability and Region of Attraction Analysis for Neural Network Feedback Systems under Positivity Constraints</a></h3>
+            <p class="authors"><b>H. Montazeri Hedesh</b>, M. Wafi, M. Siami</p>
+            <div class="pub-links">
+              <a href="https://doi.org/10.1109/CDC57313.2025.11312171" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>DOI</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub">
+          <div class="pub-meta"><span class="venue">IEEE CCTA</span><span class="badge published">Published &middot; 2025</span></div>
+          <div class="pub-body">
+            <h3><a href="https://doi.org/10.1109/CCTA53793.2025.11151493" target="_blank" rel="noopener">Robust Stability Analysis of Positive Lur&rsquo;e System with Neural Network Feedback</a></h3>
+            <p class="authors"><b>H. Montazeri Hedesh</b>, M. K. Wafi, B. Shafai, M. Siami</p>
+            <div class="pub-links">
+              <a href="https://doi.org/10.1109/CCTA53793.2025.11151493" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>DOI</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub">
+          <div class="pub-meta"><span class="venue">ACC 2024</span><span class="badge published">Published</span></div>
+          <div class="pub-body">
+            <h3><a href="https://doi.org/10.23919/ACC60939.2024.10645036" target="_blank" rel="noopener">Predator-Swarm-Guide Dynamics: A Hybrid Approach to Crowd Modeling and Guidance in Mass Shooting Scenarios</a></h3>
+            <p class="authors">A. Darabi, <b>H. M. Hedesh</b>, M. Siami, M. Sznaier &middot; <span class="mono" style="font-size:.85em;">pp. 4402&ndash;4408</span></p>
+            <div class="pub-links">
+              <a href="https://doi.org/10.23919/ACC60939.2024.10645036" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>DOI</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scholar-note reveal">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zM6 13.4V17c0 1.7 2.7 3 6 3s6-1.3 6-3v-3.6l-6 3.3-6-3.3z"/></svg>
+        <span>Full and up-to-date list on <a href="https://scholar.google.com/citations?user=5k1HFTkAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar &rarr;</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TALKS & TEACHING ============ -->
+  <section class="section" id="talks" style="background:var(--surface-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Talks &amp; Teaching</span>
+        <h2>Sharing the work.</h2>
+      </div>
+      <div class="two">
+        <!-- EDIT: replace these with your specific talks (title, venue, location, month/year) -->
+        <div class="block reveal">
+          <h3>Selected talks</h3>
+          <div class="tline">
+            <div class="item">
+              <div class="head">Delay-Independent Safe Control with Neural Networks</div>
+              <div class="sub">Paper presentation &middot; <span class="mv">American Control Conference (ACC) 2026</span></div>
+            </div>
+            <div class="item">
+              <div class="head">Local Stability &amp; Region of Attraction for NN Feedback Systems</div>
+              <div class="sub">Paper presentation &middot; <span class="mv">IEEE CDC 2025</span></div>
+            </div>
+            <div class="item">
+              <div class="head">Robust Stability of Positive Lur&rsquo;e Systems with NN Feedback</div>
+              <div class="sub">Paper presentation &middot; <span class="mv">IEEE CCTA 2025</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- EDIT: replace with your actual courses (course code, title, institution, term, role) -->
+        <div class="block reveal">
+          <h3>Teaching</h3>
+          <div class="tline">
+            <div class="item">
+              <div class="head">Course title</div>
+              <div class="sub">Teaching / Graduate Assistant &middot; <span class="mv">Northeastern University &middot; Term Year</span></div>
+            </div>
+            <div class="item">
+              <div class="head">Course title</div>
+              <div class="sub">Teaching / Graduate Assistant &middot; <span class="mv">Northeastern University &middot; Term Year</span></div>
+            </div>
+          </div>
+          <p class="mono" style="font-size:.72rem;color:var(--faint);margin-top:18px;">Add your courses &amp; roles here &mdash; see the full list on the <a href="https://hmon91.github.io/teaching/" target="_blank" rel="noopener">teaching page</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section contact" id="contact">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">Contact</span>
+        <h2>Let&rsquo;s talk about safe, verifiable autonomy.</h2>
+        <a class="mail" href="mailto:montazerihedesh.h@northeastern.edu">montazerihedesh.h@northeastern.edu</a>
+        <div class="links">
+          <a class="link-pill" href="https://scholar.google.com/citations?user=5k1HFTkAAAAJ&hl=en" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zM6 13.4V17c0 1.7 2.7 3 6 3s6-1.3 6-3v-3.6l-6 3.3-6-3.3z"/></svg>Scholar</a>
+          <a class="link-pill" href="https://github.com/hmon91" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 8.8 21.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.8-2.4 4.7-4.6 4.9.3.3.6.9.6 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>GitHub</a>
+          <a class="link-pill" href="https://orcid.org/0009-0007-0041-830X" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8.3 7.4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-.9 3.1h1.8v6.1H7.4v-6zM11 10.5h3.2c2.1 0 3.2 1.4 3.2 3.05 0 1.7-1.3 3.05-3.3 3.05H11v-6.1zm1.8 1.5v3.1h1.3c1.1 0 1.7-.7 1.7-1.55 0-.9-.5-1.55-1.7-1.55h-1.3z"/></svg>ORCID</a>
+          <a class="link-pill" href="https://www.linkedin.com/in/hamidreza-montazeri/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM3 9h3v12H3V9zm6 0h2.9v1.7h.04c.4-.8 1.4-1.6 2.9-1.6 3.1 0 3.7 2 3.7 4.7V21h-3v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9V9z"/></svg>LinkedIn</a>
+          <a class="link-pill" href="https://hmon91.github.io/cv/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>CV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <span>&copy; <span id="year">2026</span> Hamidreza Montazeri Hedesh</span>
+      <div class="foot-links">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="https://hmon91.github.io/cv/" target="_blank" rel="noopener">CV</a>
+      </div>
+      <span>Boston, MA &middot; Northeastern University</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---- Year ---- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---- Theme toggle (in-memory) ---- */
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('themeToggle');
+  function syncPressed() {
+    themeBtn.setAttribute('aria-pressed', root.getAttribute('data-theme') === 'dark' ? 'true' : 'false');
+  }
+  syncPressed();
+  themeBtn.addEventListener('click', function () {
+    root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    syncPressed();
+    refreshColors();
+    draw(1);
+  });
+
+  /* ---- Mobile nav ---- */
+  var nav = document.getElementById('nav');
+  var navToggle = document.getElementById('navToggle');
+  navToggle.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      nav.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---- Scroll reveal ---- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(function (el) { if (!el.classList.contains('in')) io.observe(el); });
+  }
+
+  /* ============ Phase-portrait signature ============ */
+  var canvas = document.getElementById('phase');
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, dpr = 1;
+  var trajectories = [];
+  var boundary = [];
+  var field = [];
+  var C = {};
+
+  var A = [[-0.34, -1.02], [1.02, -0.34]]; // spiral sink (eigenvalues -0.34 +/- i)
+  var Rd = 2.35;                            // data half-range
+  var PAD = 30;                             // px padding inside canvas
+  var DT = 0.05, STEPS = 240;
+
+  function f(x, y) { return [A[0][0]*x + A[0][1]*y, A[1][0]*x + A[1][1]*y]; }
+
+  function integrate(x0, y0) {
+    var pts = [[x0, y0]], x = x0, y = y0, i;
+    for (i = 0; i < STEPS; i++) {
+      var k1 = f(x, y);
+      var k2 = f(x + 0.5*DT*k1[0], y + 0.5*DT*k1[1]);
+      var k3 = f(x + 0.5*DT*k2[0], y + 0.5*DT*k2[1]);
+      var k4 = f(x + DT*k3[0], y + DT*k3[1]);
+      x += DT/6*(k1[0] + 2*k2[0] + 2*k3[0] + k4[0]);
+      y += DT/6*(k1[1] + 2*k2[1] + 2*k3[1] + k4[1]);
+      pts.push([x, y]);
+      if (x*x + y*y < 0.0012) break;
+    }
+    return pts;
+  }
+
+  function refreshColors() {
+    var s = getComputedStyle(root);
+    C.teal = s.getPropertyValue('--teal').trim();
+    C.tealB = s.getPropertyValue('--teal-bright').trim();
+    C.amber = s.getPropertyValue('--amber').trim();
+    C.grid = s.getPropertyValue('--border').trim();
+    C.faint = s.getPropertyValue('--faint').trim();
+  }
+
+  function toPx(p, scale, cx, cy) { return [cx + p[0]*scale, cy - p[1]*scale]; }
+
+  function build() {
+    var scale = (Math.min(W, H) / 2 - PAD) / Rd;
+    var cx = W / 2, cy = H / 2, i;
+
+    // trajectories from a ring of initial conditions
+    trajectories = [];
+    var N = 9, r0 = Rd * 0.86;
+    for (i = 0; i < N; i++) {
+      var ang = (i / N) * Math.PI * 2 + 0.35;
+      var rr = r0 * (0.9 + 0.12 * ((i % 3) / 2));
+      var raw = integrate(Math.cos(ang) * rr, Math.sin(ang) * rr);
+      trajectories.push(raw.map(function (p) { return toPx(p, scale, cx, cy); }));
+    }
+
+    // certified region boundary (ellipse enclosing the ring)
+    boundary = [];
+    var rb = Rd * 0.98;
+    for (i = 0; i <= 96; i++) {
+      var t = (i / 96) * Math.PI * 2;
+      boundary.push(toPx([Math.cos(t) * rb, Math.sin(t) * rb * 0.98], scale, cx, cy));
+    }
+
+    // faint vector field on a coarse grid
+    field = [];
+    var G = 7, step = (2 * Rd) / (G + 1);
+    for (var gx = 1; gx <= G; gx++) {
+      for (var gy = 1; gy <= G; gy++) {
+        var x = -Rd + gx * step, y = -Rd + gy * step;
+        if (x*x + y*y*1.04 > (Rd*0.98)*(Rd*0.98)) continue;
+        var v = f(x, y), m = Math.hypot(v[0], v[1]) || 1;
+        var L = scale * 0.13;
+        var p = toPx([x, y], scale, cx, cy);
+        field.push([p[0], p[1], (v[0]/m)*L, -(v[1]/m)*L]);
+      }
+    }
+  }
+
+  function resize() {
+    var r = canvas.getBoundingClientRect();
+    if (!r.width) return;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    build();
+    if (reduce) draw(1);
+  }
+
+  function draw(progress, time) {
+    if (!W) return;
+    ctx.clearRect(0, 0, W, H);
+
+    // vector field
+    ctx.strokeStyle = C.teal; ctx.globalAlpha = 0.14; ctx.lineWidth = 1;
+    ctx.beginPath();
+    field.forEach(function (a) {
+      ctx.moveTo(a[0], a[1]);
+      ctx.lineTo(a[0] + a[2], a[1] + a[3]);
+    });
+    ctx.stroke();
+    // arrow tips
+    ctx.fillStyle = C.teal;
+    field.forEach(function (a) {
+      var ex = a[0] + a[2], ey = a[1] + a[3];
+      var ang = Math.atan2(a[3], a[2]), s = 3.2;
+      ctx.beginPath();
+      ctx.moveTo(ex, ey);
+      ctx.lineTo(ex - s*Math.cos(ang - 0.5), ey - s*Math.sin(ang - 0.5));
+      ctx.lineTo(ex - s*Math.cos(ang + 0.5), ey - s*Math.sin(ang + 0.5));
+      ctx.closePath(); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    // certified region boundary (amber)
+    ctx.beginPath();
+    boundary.forEach(function (p, i) { i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); });
+    ctx.closePath();
+    ctx.save();
+    ctx.strokeStyle = C.amber; ctx.lineWidth = 1.6;
+    ctx.setLineDash([5, 5]); ctx.globalAlpha = 0.9;
+    ctx.stroke();
+    ctx.restore();
+
+    // trajectories (teal), revealed to progress
+    ctx.strokeStyle = C.teal; ctx.lineWidth = 1.7;
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.globalAlpha = 0.82;
+    trajectories.forEach(function (pts) {
+      var upto = Math.max(2, Math.floor(pts.length * progress));
+      ctx.beginPath();
+      for (var i = 0; i < upto; i++) { i ? ctx.lineTo(pts[i][0], pts[i][1]) : ctx.moveTo(pts[i][0], pts[i][1]); }
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+
+    // moving flow dots (ambient) once revealed
+    if (!reduce && progress >= 1 && time != null) {
+      ctx.fillStyle = C.tealB;
+      [0, 3, 6].forEach(function (idx, k) {
+        var pts = trajectories[idx]; if (!pts) return;
+        var period = pts.length;
+        var pos = Math.floor((time / 26 + k * period / 3)) % period;
+        var p = pts[pos];
+        ctx.save();
+        ctx.shadowColor = C.tealB; ctx.shadowBlur = 8;
+        ctx.beginPath(); ctx.arc(p[0], p[1], 3, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+      });
+    }
+
+    // equilibrium
+    var cx = W/2, cy = H/2;
+    ctx.strokeStyle = C.teal; ctx.globalAlpha = 0.4; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(cx, cy, 9, 0, Math.PI*2); ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = C.teal;
+    ctx.beginPath(); ctx.arc(cx, cy, 3.4, 0, Math.PI*2); ctx.fill();
+  }
+
+  var started = false, startT = 0, running = false, rafId = null;
+  function loop(t) {
+    if (!startT) startT = t;
+    var p = reduce ? 1 : Math.min((t - startT) / 2200, 1);
+    draw(p, t);
+    if (running) rafId = requestAnimationFrame(loop);
+  }
+  function start() {
+    if (started || reduce) { if (reduce) { refreshColors(); build(); draw(1); } return; }
+    started = true; running = true; startT = 0;
+    rafId = requestAnimationFrame(loop);
+  }
+  function stop() { running = false; if (rafId) cancelAnimationFrame(rafId); }
+
+  refreshColors();
+  // init after fonts/layout settle
+  requestAnimationFrame(function () { resize(); });
+  window.addEventListener('load', function () { resize(); });
+
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { resize(); if (started && !running && !reduce) { running = true; startT = performance.now() - 2200; rafId = requestAnimationFrame(loop); } }, 160);
+  });
+
+  // start/pause animation based on visibility
+  if ('IntersectionObserver' in window && !reduce) {
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { start(); if (!running) { running = true; rafId = requestAnimationFrame(loop); } }
+        else { stop(); }
+      });
+    }, { threshold: 0.08 });
+    vio.observe(canvas);
+  } else {
+    start();
+  }
+})();
+</script>
+</body>
+</html>
