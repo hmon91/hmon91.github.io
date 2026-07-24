@@ -1,0 +1,71 @@
+/* ==========================================================================
+    SLATE THEME - LIGHT VERSION
+    Cool neutral paper with a deep teal accent. Modern, precise, technical.
+    ========================================================================== */
+
+/* Color codes used for the theme */
+$primary-color              : #0f6e7d;
+$gray                       : #737d86;
+$dark-gray                  : mix(#000, $gray, 48%);
+$darker-gray                : mix(#000, $gray, 64%);
+$light-gray                 : mix(#fff, $gray, 55%);
+$lighter-gray               : mix(#fff, $gray, 89%);
+
+$background                 : #f7f8f9;
+$footer                     : #eceff1;
+$text                       : #232a30;
+$link                       : #0f7c8d;
+$link-dark                  : mix(#000, $link, 22%);
+$link-light                 : mix(#fff, $link, 28%);
+$code-bg                    : #f2f4f5;
+$selection-bg               : #cdeaee;
+$selection-text             : #06323a;
+
+/* Color codes used for the site */
+$danger-color               : #d9534f;
+$info-color                 : $primary-color;
+$notice-color               : $gray;
+$success-color              : #4c9a6b;
+$warning-color              : #e0902a;
+
+/* Other basic settings for the template */
+$border-radius              : 6px;
+$box-shadow                 : 0 2px 8px rgba(20, 30, 40, 0.06);
+$global-transition          : all 0.2s ease-in-out;
+$masthead-height            : 70px;
+$navicon-width              : 28px;
+$navicon-height             : 4px;
+$sidebar-link-max-width     : 250px;
+$sidebar-screen-min-width   : 1024px;
+
+/* Slate light theme for the site */
+:root {
+    --global-base-color                 : #{$primary-color};
+    --global-bg-color                   : #{$background};
+    --global-footer-bg-color            : #{$footer};
+    --global-border-color               : #{$lighter-gray};
+    --global-dark-border-color          : #{$light-gray};
+    --global-code-background-color      : #{$code-bg};
+    --global-code-text-color            : #{$darker-gray};
+    --global-fig-caption-color          : #{mix(#fff, $dark-gray, 18%)};
+    --global-link-color                 : #{$link};
+    --global-link-color-hover           : #{$link-dark};
+    --global-link-color-visited         : #{$link-light};
+    --global-masthead-link-color        : #{$text};
+    --global-masthead-link-color-hover  : #{$primary-color};
+    --global-text-color                 : #{$text};
+    --global-text-color-light           : #{$light-gray};
+    --global-thead-color                : #{$lighter-gray};
+    --global-toc-bg-color               : #{mix(#fff, $primary-color, 93%)};
+    --global-selection-bg-color         : #{$selection-bg};
+    --global-selection-text-color       : #{$selection-text};
+}
+
+::selection {
+    background-color: var(--global-selection-bg-color);
+    color: var(--global-selection-text-color);
+}
+::-moz-selection {
+    background-color: var(--global-selection-bg-color);
+    color: var(--global-selection-text-color);
+}

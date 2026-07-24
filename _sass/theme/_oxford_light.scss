@@ -1,0 +1,71 @@
+/* ==========================================================================
+    OXFORD THEME - LIGHT VERSION
+    Deep scholarly blue on warm paper. Calm, high-legibility, classic.
+    ========================================================================== */
+
+/* Color codes used for the theme */
+$primary-color              : #1f4e79;
+$gray                       : #6f7b88;
+$dark-gray                  : mix(#000, $gray, 45%);
+$darker-gray                : mix(#000, $gray, 62%);
+$light-gray                 : mix(#fff, $gray, 55%);
+$lighter-gray               : mix(#fff, $gray, 88%);
+
+$background                 : #faf9f6;
+$footer                     : #efece5;
+$text                       : #20293a;
+$link                       : #235e93;
+$link-dark                  : mix(#000, $link, 22%);
+$link-light                 : mix(#fff, $link, 30%);
+$code-bg                    : #f4f2ec;
+$selection-bg               : #cfe0f0;
+$selection-text             : #12233a;
+
+/* Color codes used for the site */
+$danger-color               : #d9534f;
+$info-color                 : $primary-color;
+$notice-color               : $gray;
+$success-color              : #4c9a6b;
+$warning-color              : #d9932b;
+
+/* Other basic settings for the template */
+$border-radius              : 5px;
+$box-shadow                 : 0 1px 2px rgba(20, 35, 60, 0.10);
+$global-transition          : all 0.2s ease-in-out;
+$masthead-height            : 70px;
+$navicon-width              : 28px;
+$navicon-height             : 4px;
+$sidebar-link-max-width     : 250px;
+$sidebar-screen-min-width   : 1024px;
+
+/* Oxford light theme for the site */
+:root {
+    --global-base-color                 : #{$primary-color};
+    --global-bg-color                   : #{$background};
+    --global-footer-bg-color            : #{$footer};
+    --global-border-color               : #{$lighter-gray};
+    --global-dark-border-color          : #{$light-gray};
+    --global-code-background-color      : #{$code-bg};
+    --global-code-text-color            : #{$darker-gray};
+    --global-fig-caption-color          : #{mix(#fff, $dark-gray, 20%)};
+    --global-link-color                 : #{$link};
+    --global-link-color-hover           : #{$link-dark};
+    --global-link-color-visited         : #{$link-light};
+    --global-masthead-link-color        : #{$text};
+    --global-masthead-link-color-hover  : #{$primary-color};
+    --global-text-color                 : #{$text};
+    --global-text-color-light           : #{$light-gray};
+    --global-thead-color                : #{$lighter-gray};
+    --global-toc-bg-color               : #{mix(#fff, $primary-color, 92%)};
+    --global-selection-bg-color         : #{$selection-bg};
+    --global-selection-text-color       : #{$selection-text};
+}
+
+::selection {
+    background-color: var(--global-selection-bg-color);
+    color: var(--global-selection-text-color);
+}
+::-moz-selection {
+    background-color: var(--global-selection-bg-color);
+    color: var(--global-selection-text-color);
+}
