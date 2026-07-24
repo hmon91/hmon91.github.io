@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-site_theme               : "sunrise" # The available themes options are "default", "oxford", "slate", "pine", "air", "sunrise", "mint", "dirt" and "contrast"
+site_theme               : "oxford" # The available themes options are "default", "oxford", "slate", "pine", "air", "sunrise", "mint", "dirt" and "contrast"
 title                    : "Hamidreza Montazeri Hedesh"
 title_separator          : "-"
 name                     : &name "Hamidreza Montazeri Hedesh"
