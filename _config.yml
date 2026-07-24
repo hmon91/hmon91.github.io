@@ -38,7 +38,7 @@ author:
   googlescholar    : "https://scholar.google.com/citations?user=5k1HFTkAAAAJ&hl=en"
   inspire-hep      : # URL
   impactstory      : # URL
-  orcid            : "https://orcid.org/my-orcid?orcid=0009-0007-0041-830X"
+  orcid            : "https://orcid.org/0009-0007-0041-830X"
   semantic         : # URL
   ssrn             : # URL
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
@@ -51,7 +51,7 @@ author:
   bitbucket        : # Username - Update with your username on the site
   codepen          : # Username
   dribbble         : # Username
-  github           : "https://github.com/hmon91"
+  github           : "hmon91"
   kaggle           : # Username  
   stackoverflow    : # User number or user number and name (i.e., use "1" or "1/jeff-atwood")    
 
@@ -66,7 +66,7 @@ author:
   keybase          : # Username
   instagram        : # Username
   lastfm           : # Username
-  linkedin         : "https://www.linkedin.com/in/hamidreza-montazeri/"
+  linkedin         : "hamidreza-montazeri"
   mastodon         : # URL
   medium           : # URL
   pinterest        : # Username
