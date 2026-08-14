@@ -1,6 +1,6 @@
 ---
 title: "Distributed Adaptive Estimation over Sensor Networks with Partially Unknown Source Dynamics"
-collection: conferences
+collection: publications
 category: conferences
 permalink: /publication/2026-10-02-submitted-ifac
 excerpt: 'Submitted to IFAC World Congress 2026.'
