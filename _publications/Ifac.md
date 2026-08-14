@@ -3,12 +3,12 @@ title: "Distributed Adaptive Estimation over Sensor Networks with Partially Unkn
 collection: publications
 category: conferences
 permalink: /publication/2026-10-02-submitted-ifac
-excerpt: 'Submitted to IFAC World Congress 2026.'
+excerpt: 'Accepted at the IFAC World Congress 2026.'
 date: 2026-10-02
 paperurl: 'https://arxiv.org/abs/2511.07646'
-citation: 'M. K. Wafi, H. Montazeri Hedesh, and M. Siami. "Distributed Adaptive Estimation over Sensor Networks with Partially Unknown Source Dynamics" (Submitted).'
+citation: 'M. K. Wafi, H. Montazeri Hedesh, and M. Siami. (2026). "Distributed Adaptive Estimation over Sensor Networks with Partially Unknown Source Dynamics," <i>IFAC World Congress</i> (Accepted).'
 ---
 
-Submitted to **IFAC World Congress 2026**.
+Accepted at the **IFAC World Congress 2026**.
 
 [arXiv:2511.07646](https://arxiv.org/abs/2511.07646)
