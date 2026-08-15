@@ -1,0 +1,15 @@
+{% comment %}
+Renders the status line (for papers that are not published yet) and the row of
+external links for a single publication. Shared by the publications listing
+(_includes/archive-single-publication.html) and by each publication's own page,
+so the URLs live only in front matter and are never duplicated in the body.
+
+Usage: include publication-meta.html post=post
+(written without tag braces so Liquid does not parse it inside this comment)
+{% endcomment %}
+{% assign pub = include.post %}
+{% if pub.status %}<p class="publication-status">{{ pub.status }}</p>{% endif %}
+{% assign sep = "" %}
+{% capture links %}{% if pub.ieeeurl %}<a href="{{ pub.ieeeurl }}">IEEE Xplore</a>{% assign sep = " &middot; " %}{% endif %}{% if pub.arxivurl %}{{ sep }}<a href="{{ pub.arxivurl }}">arXiv</a>{% assign sep = " &middot; " %}{% endif %}{% if pub.codeurl %}{{ sep }}<a href="{{ pub.codeurl }}">Code</a>{% assign sep = " &middot; " %}{% endif %}{% if pub.slidesurl %}{{ sep }}<a href="{{ pub.slidesurl }}">Slides</a>{% endif %}{% endcapture %}
+{% assign links = links | strip %}
+{% if links != "" %}<p class="publication-links">{{ links }}</p>{% endif %}

@@ -91,6 +91,10 @@ publication_category:
   conferences:
     title: 'Conference Papers'
 
+# Name to bold in the author list on the publications page. Must be written
+# exactly as it appears in the `authors:` front matter of _publications/*.md
+publication_author: 'H. Montazeri Hedesh'
+
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/ for social media previews
 breadcrumbs              : false # true, false (default)

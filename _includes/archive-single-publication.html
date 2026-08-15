@@ -1,0 +1,36 @@
+{% comment %}
+Compact listing entry for the publications page: title, authors, venue and year
+(or status), then the link row. Deliberately omits the excerpt and the full
+"Recommended citation" block that _includes/archive-single.html renders -- both
+are still shown on the publication's own page.
+{% endcomment %}
+{% include base_path %}
+
+{% if post.id %}
+  {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+{% else %}
+  {% assign title = post.title %}
+{% endif %}
+
+<div class="list__item">
+  <article class="archive__item publication" itemscope itemtype="http://schema.org/CreativeWork">
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
+    </h2>
+
+    {% if post.authors %}
+      {% assign author_line = post.authors %}
+      {% if site.publication_author %}
+        {% capture bold_name %}<strong>{{ site.publication_author }}</strong>{% endcapture %}
+        {% assign author_line = author_line | replace: site.publication_author, bold_name %}
+      {% endif %}
+      <p class="publication-authors">{{ author_line }}</p>
+    {% endif %}
+
+    {% if post.venue %}
+      <p class="publication-venue"><i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }}</p>
+    {% endif %}
+
+    {% include publication-meta.html post=post %}
+  </article>
+</div>

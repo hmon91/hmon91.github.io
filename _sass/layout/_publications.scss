@@ -1,0 +1,38 @@
+/* ==========================================================================
+   PUBLICATIONS LISTING
+   Compact entries for /publications/, rendered by
+   _includes/archive-single-publication.html
+
+   The theme's type scale jumps straight from $type-size-5 (16px) to
+   $type-size-6 (12px), which is too small for the secondary lines here, so
+   those use an explicit 0.9em (~14px) instead.
+   ========================================================================== */
+
+.archive__item.publication {
+  margin-bottom: 1.35em;
+
+  /* The theme gives titles inside .page__content a 1em top margin. Pull it
+     back so entries read as one list rather than as separate sections. */
+  .page__content & .archive__item-title,
+  .archive__item-title {
+    margin-top: 0;
+    margin-bottom: 0.15em;
+    font-size: $type-size-4;
+    line-height: 1.3;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+}
+
+.publication-venue,
+.publication-status {
+  opacity: 0.75;
+}
+
+.publication-links {
+  margin-top: 0.2em !important;
+}

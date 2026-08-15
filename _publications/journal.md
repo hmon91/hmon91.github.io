@@ -5,7 +5,9 @@ category: manuscripts
 permalink: /publication/2026-10-01-submitted-tac
 excerpt: 'Submitted to IEEE Transactions on Automatic Control.'
 date: 2026-10-01
+authors: 'H. Montazeri Hedesh, M. Siami'
+status: 'Submitted to IEEE Transactions on Automatic Control (TAC)'
 citation: 'H. Montazeri Hedesh, and M. Siami. "Taming Neural Feedback Loops via Positivity: Stability, Robustness, and Region of Attraction" (Submitted).'
 ---
 
-Submitted to **IEEE Transactions on Automatic Control (TAC)**.
+{% include publication-meta.html post=page %}
