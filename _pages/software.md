@@ -25,7 +25,7 @@ This is the form that absolute-stability tests need (circle criterion, Lur'e sys
 ### What it does
 
 * **Local sector bounds** on a box around any point $$y^*$$, for networks with or without biases. This is the method of my [CDC 2025 paper]({{ base_path }}/publication/2025-12-12-cdc-paper).
-* **Global sector bounds** that hold for every input: $$\Gamma_2 = c^q \lvert W_{q+1} \rvert \cdots \lvert W_1 \rvert$$ and $$\Gamma_1 = -\Gamma_2$$, the bound of my [L-CSS 2024 paper]({{ base_path }}/publication/2024-01-01-lcss-positivity).
+* **Global sector bounds** that need no box, with $$\Gamma_2 = c^q \lvert W_{q+1} \rvert \cdots \lvert W_1 \rvert$$, the bound of my [L-CSS 2024 paper]({{ base_path }}/publication/2024-01-01-lcss-positivity). For a network without biases (with tanh, ReLU or leaky ReLU), $$-\Gamma_2\, y \le \pi(y) \le \Gamma_2\, y$$ for every $$y \ge 0$$. With biases, $$\Gamma_2$$ bounds the change between any two inputs: $$\lvert \pi(y) - \pi(y^*) \rvert \le \Gamma_2 \lvert y - y^* \rvert$$.
 * **Five activations:** tanh, sigmoid, ReLU, leaky ReLU and softplus.
 * **PyTorch models:** `Network.from_torch(model)` reads an `nn.Sequential` network.
 * **A sampling check:** `check(net, bound)` tests a bound on many random points, so a wrong bound gets caught.
@@ -74,7 +74,7 @@ net = ns.Network([W1, W2, W3], [b1, b2, b3], activation="relu")   # from weights
 net = ns.Network.from_torch(model)                                # or from a PyTorch model
 
 sb = ns.local_bound(net, y_lo=-1, y_hi=1, ystar=0.5)   # local bound around y* = 0.5
-gb = ns.global_bound(net)                              # global bound
+gb = ns.global_bound(net)                              # global bound on pi(y) - pi(y*)
 ```
 
 The [README](https://github.com/hmon91/nnsector#readme) explains networks with several inputs, the options, and how the bound is computed.
