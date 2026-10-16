@@ -26,6 +26,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 ---
 * **Novel Neural Network Bounding:** Designed global & local NN bounding (depth‑agnostic) methods, enabling $$\sim 10\times$$ faster bound computation and tight, input‑aware sector envelopes for controllers.
 * **Scalable Verification Pipeline:** Built a scalable robust stability verification pipeline for NN‑in‑the‑loop systems under positivity constraints, achieving up to $$\sim 10^4\times$$ speedup over state-of-the-art baselines.
+* **Safe-by-Design NN Controllers:** Designed neural network controllers for systems with time delays and model uncertainty: the architecture enforces the required stability sector on the controller's gain at the origin by construction, and a sector-regularized imitation-learning loss pushes the trained controller to stay inside the sector.
 * **Sim-to-Real Gap:** Validated learning-enabled control frameworks through extensive simulation and hardware-informed experiments, bridging the gap between theoretical guarantees and real-world robotic performance.
 * **Tool Integration:** Implemented state‑of‑the‑art verification (AutoLiRPA, JAX‑Verify) and bridged them with classical control toolchains (MPC/robust analysis) for reproducible experiments using MATLAB/Python integration.
 * **Crowd Dynamics & Fluid Analogy:** Modeled large-scale population motion as continuum flow dynamics and designed optimal egress control policies, highlighting transferable techniques for airflow and transport phenomena.
