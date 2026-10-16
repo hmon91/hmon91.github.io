@@ -131,6 +131,8 @@ Iterating **S1–S2** from the input to the output yields constant matrices $\ga
 ## 2. Stability Verification & Safety
 Once the neural network is bounded, I use **Control Theory** to certify that the closed-loop system (the robot or plant + the neural network) is stable.
 
+> **Software:** The Metzler and Hurwitz stability tests and the region of attraction estimate below are available in my open-source library [nnstab](https://github.com/hmon91/nnstab), for Python and MATLAB. See the [Software]({{ base_path }}/software/) page.
+
 ### Positive Aizerman Framework
 My verification pipeline relies on the **Positive Aizerman Conjecture**. By embedding the bounded neural network into a "Positive Lur'e System" framework, we reduce the complex stability problem to simple linear algebra checks.
 
