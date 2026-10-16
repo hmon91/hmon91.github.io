@@ -24,12 +24,18 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 ## Research & Impact
 ---
-* **Novel Neural Network Bounding:** Designed global & local NN bounding (depth‑agnostic) methods, enabling $$~10×$$ faster bound computation and tight, input‑aware sector envelopes for controllers.
-* **Scalable Verification Pipeline:** Built a scalable robust stability verification pipeline for NN‑in‑the‑loop systems under positivity constraints, achieving up to $$~10^4×\$$ speedup over state-of-the-art baselines.
+* **Novel Neural Network Bounding:** Designed global & local NN bounding (depth‑agnostic) methods, enabling $$\sim 10\times$$ faster bound computation and tight, input‑aware sector envelopes for controllers.
+* **Scalable Verification Pipeline:** Built a scalable robust stability verification pipeline for NN‑in‑the‑loop systems under positivity constraints, achieving up to $$\sim 10^4\times$$ speedup over state-of-the-art baselines.
 * **Sim-to-Real Gap:** Validated learning-enabled control frameworks through extensive simulation and hardware-informed experiments, bridging the gap between theoretical guarantees and real-world robotic performance.
 * **Tool Integration:** Implemented state‑of‑the‑art verification (AutoLiRPA, JAX‑Verify) and bridged them with classical control toolchains (MPC/robust analysis) for reproducible experiments using MATLAB/Python integration.
 * **Crowd Dynamics & Fluid Analogy:** Modeled large-scale population motion as continuum flow dynamics and designed optimal egress control policies, highlighting transferable techniques for airflow and transport phenomena.
 * **Space Robotics Optimization:** Derived coupled attitude–orbit dynamics of a solar sail via center-of-mass manipulation, including interplanetary path optimization using SNOPT.
+
+## Open-Source Software
+---
+* **[nnsector](https://github.com/hmon91/nnsector):** Python and MATLAB library that computes global and local sector bounds of feedforward neural networks for absolute-stability analysis of neural feedback loops; supports PyTorch models.
+* **[nnstab](https://github.com/hmon91/nnstab):** Python and MATLAB library that certifies exponential stability of positive feedback loops with a neural network controller and finds the largest certified region of attraction, using Metzler and Hurwitz tests instead of semidefinite programming.
+* More on the [Software]({{ base_path }}/software/) page.
 
 ## Work Experience
 ---
@@ -74,7 +80,7 @@ You can download a PDF copy of my complete CV [here](/files/cv.pdf).
 
 * **Neural Network Sector Bounding:** Developed global and local sector-bounding methods for feedforward neural networks, enabling depth-agnostic and input-aware certification tighter and faster than prior approaches.
 
-* **Scalable Stability Verification:** Built a positivity-based stability and robustness verification pipeline for NN-controlled dynamical systems, achieving up to 10^4× computational speedup over state-of-the-art.
+* **Scalable Stability Verification:** Built a positivity-based stability and robustness verification pipeline for NN-controlled dynamical systems, achieving up to $$10^4\times$$ computational speedup over state-of-the-art.
 
 * **Exact MILP Certification:** Formulated mixed-integer (MILP) encodings of ReLU networks for exact closed-loop stability verification of nonlinear feedback systems.
 
