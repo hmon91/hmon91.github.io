@@ -15,15 +15,28 @@ author_profile: true
 {% if site.publication_category %}
   {% for category in site.publication_category  %}
     {% assign title_shown = false %}
-    {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
-      {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      {% include archive-single-publication.html %}
+    {% comment %}
+      Two passes: first the papers whose first author is site.publication_author,
+      then the papers led by co-authors. Each pass lists the newest first.
+    {% endcomment %}
+    {% for lead_pass in (1..2) %}
+      {% for post in site.publications reversed %}
+        {% if post.category != category[0] %}
+          {% continue %}
+        {% endif %}
+        {% assign first_author = post.authors | split: "," | first | strip %}
+        {% if lead_pass == 1 and first_author != site.publication_author %}
+          {% continue %}
+        {% endif %}
+        {% if lead_pass == 2 and first_author == site.publication_author %}
+          {% continue %}
+        {% endif %}
+        {% unless title_shown %}
+          <h2>{{ category[1].title }}</h2><hr />
+          {% assign title_shown = true %}
+        {% endunless %}
+        {% include archive-single-publication.html %}
+      {% endfor %}
     {% endfor %}
   {% endfor %}
 {% else %}
