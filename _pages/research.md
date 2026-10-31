@@ -8,7 +8,7 @@ author_profile: true
 {% include base_path %}
 
 <center>
-  <img src="/images/researchschematic.jpg" alt="Research Methodology Schematic" style="width: 100%; max-width: 900px; border: 1px solid #ddd; padding: 5px;">
+  <a href="{{ base_path }}/images/research_pipeline.svg" title="Open the full-size figure"><img src="{{ base_path }}/images/research_pipeline.svg" alt="Research pipeline: (1) a plant in feedback with a neural network controller, (2) the network is bounded by a sector, gamma1 y to gamma2 y, and two matrix tests check that A + B gamma1 C is Metzler and A + B gamma2 C is Hurwitz, (3) if both pass, stability, region of attraction, robustness margin and delay independence are certified 2x10^4 to 9x10^5 times faster than IQC/SDP; if not, the bound is refined or the network retrained." style="width: 100%; border: 1px solid #ddd; padding: 5px;"></a>
   <br>
   <em><strong>Figure 1:</strong> Overview of my framework for Scalable Stability & Robustness Verification of Neural Feedback Systems.</em>
 </center>
